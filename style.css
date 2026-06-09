@@ -341,21 +341,12 @@ body {
     color: #fde68a;
 }
 
-/* قسم التمرين النشط */
-.workout-section {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    margin-bottom: 2rem;
-    box-shadow: var(--shadow-lg);
-    border: 2px solid var(--success);
-}
-
+/* قسم التمرين الحالي */
 .current-exercise-card {
     background: rgba(22, 163, 74, 0.05);
     padding: 1.5rem;
     border-radius: var(--radius);
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     text-align: center;
     border: 1px solid var(--success);
 }
@@ -574,7 +565,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .mt-3 { margin-top: 1rem; }

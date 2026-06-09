@@ -30,7 +30,8 @@ tabButtons.forEach(btn => {
         btn.classList.add('active');
         document.getElementById(target).classList.add('active');
 
-        if (target === 'calendar') showTodayOnly();
+        if (target === 'calendar') renderCalendar();
+        if (target === 'tools') updateToolsView();
         if (target === 'plan') updatePlanView();
     });
 });
@@ -104,7 +105,6 @@ function getTodayType() {
 // ==============================================
 function updatePlanView() {
     const todayType = getTodayType();
-    const workoutSection = document.getElementById('workoutSection');
     const runMsg = document.getElementById('runDayMessage');
     const restMsg = document.getElementById('restDayMessage');
     const stageData = workoutStages[currentStage];
@@ -116,19 +116,31 @@ function updatePlanView() {
     document.getElementById('monthProgress').textContent = `${daysCompletedInStage} / 30 يوم`;
     document.getElementById('monthProgressFill').style.width = `${(daysCompletedInStage / 30) * 100}%`;
 
-    // إظهار القسم المناسب
-    workoutSection.style.display = 'none';
-    runMsg.style.display = 'none';
-    restMsg.style.display = 'none';
+    // إظهار الرسائل المناسبة
+    runMsg.style.display = todayType === 'run' ? 'block' : 'none';
+    restMsg.style.display = todayType === 'rest' ? 'block' : 'none';
+}
 
+// ==============================================
+// تحديث عرض قسم الأدوات
+// ==============================================
+function updateToolsView() {
+    const todayType = getTodayType();
+    const workoutSection = document.getElementById('workoutSequenceSection');
+    
     if (todayType === 'exercise') {
         workoutSection.style.display = 'block';
         updateCurrentExerciseDisplay();
-    } else if (todayType === 'run') {
-        runMsg.style.display = 'block';
     } else {
-        restMsg.style.display = 'block';
+        workoutSection.style.display = 'none';
     }
+
+    // مؤقت عام
+    initTimer();
+    // ملاحظات
+    loadNotes();
+    // وزن
+    loadWeightData();
 }
 
 // ==============================================
@@ -176,4 +188,22 @@ document.getElementById('completeExerciseBtn').addEventListener('click', () => {
     updateCurrentExerciseDisplay();
 });
 
-// =
+// ==============================================
+// حفظ حالة التمرين
+// ==============================================
+function saveWorkoutProgress() {
+    localStorage.setItem('workoutProgress', JSON.stringify(workoutProgress));
+}
+
+// ==============================================
+// إكمال يوم تدريب
+// ==============================================
+function completeDay() {
+    const today = getTodayName();
+    const todayKey = `${today}_${new Date().toDateString()}`;
+    
+    if (!completedDays.includes(todayKey)) {
+        completedDays.push(todayKey);
+        localStorage.setItem('completedDays', JSON.stringify(completedDays));
+        daysCompletedInStage++;
+        localStorage.setItem('daysCompleted

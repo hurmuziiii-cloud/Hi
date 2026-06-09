@@ -67,45 +67,19 @@
                     </div>
                 </div>
 
-                <!-- 🔹 قسم التمرين النشط (يظهر فقط في أيام التمارين) -->
-                <div class="workout-section" id="workoutSection" style="display: none;">
-                    <h3 class="section-title">💪 تسلسل التمارين</h3>
-                    <div class="timer-display" id="workoutTimer">00:00</div>
-                    <div class="timer-presets">
-                        <button class="preset-btn" data-time="30">30 ثانية</button>
-                        <button class="preset-btn" data-time="45">45 ثانية</button>
-                        <button class="preset-btn" data-time="60">دقيقة</button>
-                        <button class="preset-btn" data-time="120">دقيقتان</button>
-                    </div>
-                    <div class="timer-controls">
-                        <button id="startWorkoutTimer" class="btn btn-success">بدء</button>
-                        <button id="pauseWorkoutTimer" class="btn btn-warning">إيقاف</button>
-                        <button id="resetWorkoutTimer" class="btn btn-danger">إعادة</button>
-                    </div>
-
-                    <!-- عرض التمرين الحالي -->
-                    <div class="current-exercise-card">
-                        <h4 class="exercise-name" id="currentExerciseName">اسم التمرين</h4>
-                        <p class="exercise-sets-reps" id="currentExerciseDetails">3 × 12</p>
-                        <p class="exercise-note" id="currentExerciseNote">ملاحظة</p>
-                        <p class="sequence-info">الدورة: <span id="currentRound">1</span> / 3 | التمرين: <span id="currentExerciseIndex">1</span> / <span id="totalExercises">5</span></p>
-                        <button class="btn btn-primary w-full mt-3" id="completeExerciseBtn">✓ إكمال التمرين والانتقال للتالي</button>
-                    </div>
-                </div>
-
-                <!-- 🔹 رسالة أيام الركض -->
+                <!-- رسالة أيام الركض -->
                 <div class="run-day-message" id="runDayMessage" style="display: none;">
                     <h3 class="section-title">🏃‍♂️ يوم ركض</h3>
                     <p>الخطة لهذا اليوم: 5 دقائق إحماء → 15 دقيقة هرولة خفيفة → 5 دقائق تهدئة</p>
                 </div>
 
-                <!-- 🔹 رسالة أيام الراحة -->
+                <!-- رسالة أيام الراحة -->
                 <div class="rest-day-message" id="restDayMessage" style="display: none;">
                     <h3 class="section-title">😴 يوم راحة</h3>
                     <p>يوم مخصص للاستشفاء واستعادة طاقة الجسم</p>
                 </div>
 
-                <!-- 🔹 قائمة التمارين الكاملة (للاطلاع) -->
+                <!-- قائمة التمارين الكاملة -->
                 <div class="full-plan-preview">
                     <h3>📋 نظرة عامة على الخطة الكاملة</h3>
                     
@@ -132,7 +106,7 @@
                                             <th>ملاحظات</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="stage1Exercises">
+                                    <tbody>
                                         <tr><td>الضغط المائل</td><td>3 × 12</td><td>يداك على حافة سرير</td></tr>
                                         <tr><td>سكوات على كرسي</td><td>3 × 12</td><td>آمن تماماً للركبة</td></tr>
                                         <tr><td>البلانك</td><td>3 × 30-40 ثانية</td><td>حافظ على استقامة الجسم</td></tr>
@@ -227,6 +201,7 @@
                 <h2 class="section-title">📅 جدول المتابعة</h2>
                 <p class="section-desc">يظهر اليوم الحالي تلقائياً</p>
 
+                <!-- عرض اليوم الحالي -->
                 <div class="today-container" id="todayContainer"></div>
 
                 <button id="showAllDaysBtn" class="btn btn-secondary w-full mt-4">عرض باقي أيام الأسبوع</button>
@@ -307,7 +282,7 @@
                 <h2 class="section-title">🛠️ أدوات مساعدة</h2>
 
                 <div class="tool-card">
-                    <h3>⏱️ مؤقت عام</h3>
+                    <h3>⏱️ مؤقت التمرين</h3>
                     <div class="timer-display" id="timerDisplay">00:00</div>
                     <div class="timer-presets">
                         <button class="preset-btn" data-time="30">30 ثانية</button>
@@ -319,6 +294,18 @@
                         <button id="startTimer" class="btn btn-success">بدء</button>
                         <button id="pauseTimer" class="btn btn-warning">إيقاف</button>
                         <button id="resetTimer" class="btn btn-danger">إعادة</button>
+                    </div>
+
+                    <!-- 👇 قسم التمارين يظهر هنا فقط في أيام التمرين -->
+                    <div id="workoutSequenceSection" style="display: none; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                        <h3 class="section-title">💪 تسلسل التمارين</h3>
+                        <div class="current-exercise-card">
+                            <h4 class="exercise-name" id="currentExerciseName">اسم التمرين</h4>
+                            <p class="exercise-sets-reps" id="currentExerciseDetails">3 × 12</p>
+                            <p class="exercise-note" id="currentExerciseNote">ملاحظة</p>
+                            <p class="sequence-info">الدورة: <span id="currentRound">1</span> / 3 | التمرين: <span id="currentExerciseIndex">1</span> / <span id="totalExercises">5</span></p>
+                            <button class="btn btn-primary w-full mt-3" id="completeExerciseBtn">✓ إكمال التمرين والانتقال للتالي</button>
+                        </div>
                     </div>
                 </div>
 
