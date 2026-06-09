@@ -3,624 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خطة 3 أشهر - تدريب متكامل</title>
+    <title>خطة التدريب الشاملة</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 </head>
-<body class="bg-gray-50 dark:bg-dark text-dark dark:text-gray-100 font-sans rtl min-h-screen">
-    <!-- Header -->
+<body>
+    <!-- الهيدر -->
     <header class="header">
-        <div class="container flex justify-between items-center">
-            <h1 class="text-xl font-bold flex items-center gap-2">
-                <i class="fa fa-dumbbell"></i> خطة 3 أشهر
-            </h1>
-            <button id="themeToggle" class="theme-toggle" title="تغيير الوضع">
-                <i class="fa fa-moon-o dark:hidden text-xl"></i>
-                <i class="fa fa-sun-o hidden dark:inline text-xl"></i>
-            </button>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="site-title">
+                    <i class="fa fa-dumbbell"></i> خطة التدريب
+                </h1>
+                <button id="themeToggle" class="theme-btn" aria-label="تبديل الوضع">
+                    <i class="fa fa-moon-o dark-hidden"></i>
+                    <i class="fa fa-sun-o dark-show"></i>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Tabs Navigation -->
-    <div class="container mt-4">
-        <div class="tabs-container">
-            <button id="tabPlan" class="tab tab-active">الخطة</button>
-            <button id="tabCalendar" class="tab tab-inactive">التقويم</button>
-            <button id="tabTools" class="tab tab-inactive">الأدوات</button>
-            <button id="tabProgress" class="tab tab-inactive">التقدم</button>
-        </div>
-    </div>
-
-    <main class="container py-5 pb-10">
-        <!-- 📋 تبويب الخطة -->
-        <div id="planContent" class="content-block">
-            <!-- Safety Alert -->
-            <div class="alert alert-danger mb-6">
-                <h3 class="font-bold flex items-center gap-2 mb-2">
-                    <i class="fa fa-exclamation-triangle"></i> تنبيهات لسلامة الركبة
-                </h3>
-                <ul class="list-disc list-inside text-sm space-y-1">
-                    <li>في السكوات: انزل حتى الفخذ موازياً للأرض، اجعل الركبة تتجه للأصابع ولا تتجاوزها</li>
-                    <li>الركض: يفضل على تراب أو عشب، تجنب الإسفلت، واستخدم حذاء ممتص للصدمات</li>
-                </ul>
+    <!-- شريط التبويبات -->
+    <nav class="tabs-nav">
+        <div class="container">
+            <div class="tabs-container">
+                <button class="tab-btn active" data-tab="plan">الخطة</button>
+                <button class="tab-btn" data-tab="calendar">التقويم</button>
+                <button class="tab-btn" data-tab="tools">الأدوات</button>
+                <button class="tab-btn" data-tab="progress">التقدم</button>
             </div>
-
-            <!-- المرحلة 1 -->
-            <section class="card card-stage-success mb-6">
-                <div class="flex items-center mb-3">
-                    <div class="badge badge-success ml-3">1</div>
-                    <h2 class="text-lg font-bold text-success">🟢 المرحلة الأولى - الشهر الأول</h2>
-                </div>
-                <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg mb-4 text-green-800 dark:text-green-300 text-sm">
-                    <strong>🎯 الهدف:</strong> تهيئة المفاصل، رفع الحرق، وبدء شد الصدر والبطن
-                </div>
-
-                <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg mb-4 border-r-3 border-primary">
-                    <h4 class="font-semibold text-primary dark:text-blue-400 mb-2">🏃‍♂️ الركض: 3 أيام (سبت، إثنين، أربعاء)</h4>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">5 دقائق مشي → 15 دقيقة هرولة خفيفة → 5 دقائق تبريد</p>
-                </div>
-
-                <h4 class="font-semibold mb-2">🏠 التمارين: 3 أيام (أحد، ثلاثاء، خميس) | جمعة: راحة</h4>
-                <div class="table-container">
-                    <table class="w-full text-sm">
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                            <tr>
-                                <th class="p-3 text-right border-b border-gray-200 dark:border-gray-700">التمرين</th>
-                                <th class="p-3 text-right border-b border-gray-200 dark:border-gray-700">الهدف</th>
-                                <th class="p-3 text-right border-b border-gray-200 dark:border-gray-700">العدد</th>
-                                <th class="p-3 text-right border-b border-gray-200 dark:border-gray-700">ملاحظة</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                <td class="p-3 font-medium">الضغط المائل</td>
-                                <td class="p-3">شد الصدر العلوي</td>
-                                <td class="p-3">3×12</td>
-                                <td class="p-3">يداك على سرير</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                <td class="p-3 font-medium">سكوات على كرسي</td>
-                                <td class="p-3">حرق دهون الفخذ</td>
-                                <td class="p-3">3×12</td>
-                                <td class="p-3">آمن تماماً للركبة</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                <td class="p-3 font-medium">البلانك</td>
-                                <td class="p-3">شد البطن والظهر</td>
-                                <td class="p-3">3×30-40 ثانية</td>
-                                <td class="p-3">جسم مستقيم</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                <td class="p-3 font-medium">جسر الحوض</td>
-                                <td class="p-3">تقوية أسفل الظهر</td>
-                                <td class="p-3">3×15</td>
-                                <td class="p-3">ممتاز للركبة</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                <td class="p-3 font-medium">تسلق الجبال</td>
-                                <td class="p-3">حرق دهون البطن</td>
-                                <td class="p-3">3×30 ثانية</td>
-                                <td class="p-3">ببطء وتحكم</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- المرحلة 2 -->
-            <section class="card card-stage-warning mb-6">
-                <div class="flex items-center mb-3">
-                    <div class="badge badge-warning ml-3">2</div>
-                    <h2 class="text-lg font-bold text-warning">🟡 المرحلة الثانية - الشهر الثاني</h2>
-                </div>
-                <div class="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg mb-4 text-amber-800 dark:text-amber-300 text-sm">
-                    <strong>🎯 الهدف:</strong> زيادة الكثافة، شد الترهلات، وكسر ثبات الوزن
-                </div>
-
-                <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg mb-4 border-r-3 border-primary">
-                    <h4 class="font-semibold text-primary dark:text-blue-400 mb-2">🏃‍♂️ ركض فترات HIIT: 3 أيام</h4>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">5 دقائق مشي → (1 دقيقة ركض سريع + 2 دقيقة مشي) × 5 → 5 دقائق تبريد</p>
-                </div>
-
-                <div class="space-y-3">
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">الضغط المستوي</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">3×12-15 | على الأرض مباشرة</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">الطعن الخلفي</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">3×10 لكل رجل | أرحم للركبة</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">رفع الأرجل</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">3×12 | أساسي لدهون أسفل البطن</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">التويست الروسي</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">3×20 | لشد الخواصر</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">البلانك</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">3×50 ثانية</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- المرحلة 3 -->
-            <section class="card card-stage-danger mb-6">
-                <div class="flex items-center mb-3">
-                    <div class="badge badge-danger ml-3">3</div>
-                    <h2 class="text-lg font-bold text-danger">🔴 المرحلة الثالثة - الشهر الثالث</h2>
-                </div>
-                <div class="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg mb-4 text-red-800 dark:text-red-300 text-sm">
-                    <strong>🎯 الهدف:</strong> النحت النهائي، ورفع معدل الحرق لأقصى حد
-                </div>
-
-                <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg mb-4 border-r-3 border-primary">
-                    <h4 class="font-semibold text-primary dark:text-blue-400 mb-2">🏃‍♂️ ركض فترات مكثف: 3 أيام</h4>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">زيادة عدد الدورات إلى 7 بدلاً من 5</p>
-                </div>
-
-                <div class="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg mb-4 border-r-3 border-warning">
-                    <h4 class="font-semibold text-amber-800 dark:text-amber-300 mb-1">🔄 نظام الدائرة: لا راحة بين التمارين</h4>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">ارتح دقيقتين بعد إنهاء الخمسة تمارين، وكرر 3 مرات</p>
-                </div>
-
-                <div class="space-y-3">
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">الضغط الضيق</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">10 تكرارات | شد الصدر الداخلي</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">الجلوس على الحائط</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">45 ثانية | آمن تماماً للركبة</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">طحن الدراجة</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">20 تكرار | شد البطن والخواصر</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">الضغط المعكوس</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">10 تكرارات | شد أسفل الصدر</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-r-3 border-primary">
-                        <p class="font-medium text-primary dark:text-blue-400">رفرفة الأرجل</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">30 ثانية | إنهاء دهون العانة</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- التغذية -->
-            <section class="card card-gradient text-center">
-                <h3 class="font-bold mb-2">🥗 كبسولة النجاح</h3>
-                <p class="text-sm mb-2">التمارين تحرق الدهون، لكن المفتاح هو <strong>تقليل الطعام الدسم بمقدار الثلث</strong> والتركيز على البروتين.</p>
-                <p class="font-semibold mt-2">توكل على الله وابدأ اليوم 💪</p>
-            </section>
         </div>
+    </nav>
 
-        <!-- 📅 تبويب التقويم -->
-        <div id="calendarContent" class="content-block hidden">
-            <section class="card mb-6">
-                <h3 class="text-lg font-bold text-primary dark:text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="fa fa-calendar"></i> جدول الأسبوع
-                </h3>
-                <!-- ✅ تم إصلاح التداخل هنا -->
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <div class="container">
+            <!-- تبويب الخطة -->
+            <section id="plan" class="tab-content active">
+                <div class="alert alert-warning">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>تنبيهات هامة:</strong>
+                        <ul>
+                            <li>في السكوات: انزل حتى الفخذ موازياً للأرض، لا تُجهد الركبة</li>
+                            <li>الركض: يفضل على تراب أو عشب، واستخدم حذاء مريح</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- المرحلة 1 -->
+                <div class="stage-card stage-1">
+                    <div class="stage-header">
+                        <span class="stage-badge">1</span>
+                        <h2>المرحلة الأولى - الشهر الأول</h2>
+                    </div>
+                    <p class="stage-goal">🎯 الهدف: تهيئة الجسم، رفع اللياقة، وتقوية العضلات الأساسية</p>
+                    
+                    <div class="routine-block">
+                        <h3 class="routine-title">🏃‍♂️ أيام الركض: السبت - الإثنين - الأربعاء</h3>
+                        <p>5 دقائق مشي إحماء → 15 دقيقة هرولة خفيفة → 5 دقائق تهدئة</p>
+                    </div>
+
+                    <div class="routine-block">
+                        <h3 class="routine-title">💪 أيام التمارين: الأحد - الثلاثاء - الخميس</h3>
+                        <div class="table-responsive">
+                            <table class="exercise-table">
+                                <thead>
+                                    <tr>
+                                        <th>التمرين</th>
+                                        <th>المجموعات × التكرار</th>
+                                        <th>ملاحظات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>الضغط المائل</td>
+                                        <td>3 × 12</td>
+                                        <td>يداك على حافة سرير</td>
+                                    </tr>
+                                    <tr>
+                                        <td>سكوات على كرسي</td>
+                                        <td>3 × 12</td>
+                                        <td>آمن تماماً للركبة</td>
+                                    </tr>
+                                    <tr>
+                                        <td>البلانك</td>
+                                        <td>3 × 30-40 ثانية</td>
+                                        <td>حافظ على استقامة الجسم</td>
+                                    </tr>
+                                    <tr>
+                                        <td>جسر الحوض</td>
+                                        <td>3 × 15</td>
+                                        <td>يقوي أسفل الظهر والأرداف</td>
+                                    </tr>
+                                    <tr>
+                                        <td>تسلق الجبال</td>
+                                        <td>3 × 30 ثانية</td>
+                                        <td>بوتيرة معتدلة</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- المرحلة 2 -->
+                <div class="stage-card stage-2">
+                    <div class="stage-header">
+                        <span class="stage-badge">2</span>
+                        <h2>المرحلة الثانية - الشهر الثاني</h2>
+                    </div>
+                    <p class="stage-goal">🎯 الهدف: زيادة الكثافة، حرق الدهون، وتحسين التحمل</p>
+                    
+                    <div class="routine-block">
+                        <h3 class="routine-title">🏃‍♂️ ركض متقطع: 3 أيام أسبوعياً</h3>
+                        <p>5 دقائق إحماء → (1 دقيقة ركض سريع + 2 دقيقة مشي) × 5 → 5 دقائق تهدئة</p>
+                    </div>
+
+                    <div class="routine-block">
+                        <h3 class="routine-title">💪 تمارين القوة</h3>
+                        <div class="exercise-cards">
+                            <div class="exercise-item">
+                                <h4>الضغط الأرضي</h4>
+                                <p>3 × 12-15 تكرار</p>
+                            </div>
+                            <div class="exercise-item">
+                                <h4>الطعن الخلفي</h4>
+                                <p>3 × 10 لكل ساق</p>
+                            </div>
+                            <div class="exercise-item">
+                                <h4>رفع الأرجل</h4>
+                                <p>3 × 12 تكرار</p>
+                            </div>
+                            <div class="exercise-item">
+                                <h4>البلانك الجانبي</h4>
+                                <p>3 × 30 ثانية لكل جانب</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- المرحلة 3 -->
+                <div class="stage-card stage-3">
+                    <div class="stage-header">
+                        <span class="stage-badge">3</span>
+                        <h2>المرحلة الثالثة - الشهر الثالث</h2>
+                    </div>
+                    <p class="stage-goal">🎯 الهدف: نحت الجسم، رفع مستوى الحرق، وتثبيت العادات</p>
+                    
+                    <div class="routine-block">
+                        <h3 class="routine-title">🏃‍♂️ ركض مكثف</h3>
+                        <p>زيادة مدة الفترات وعدد الدورات، أو استبدالها بتمارين هوائية عالية الكثافة</p>
+                    </div>
+
+                    <div class="routine-block">
+                        <h3 class="routine-title">💪 نظام الدائرة</h3>
+                        <p>أداء التمارين متتالية دون راحة، ثم راحة دقيقتين بعد انتهاء المجموعة</p>
+                        <div class="exercise-cards">
+                            <div class="exercise-item">
+                                <h4>الضغط الضيق</h4>
+                                <p>12 تكرار</p>
+                            </div>
+                            <div class="exercise-item">
+                                <h4>الجلوس على الحائط</h4>
+                                <p>45 ثانية</p>
+                            </div>
+                            <div class="exercise-item">
+                                <h4>طحن البطن</h4>
+                                <p>15 تكرار</p>
+                            </div>
+                            <div class="exercise-item">
+                                <h4>رفرفة الأرجل</h4>
+                                <p>30 ثانية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nutrition-card">
+                    <h3>🥗 التغذية السليمة</h3>
+                    <p>التمارين تحتاج إلى دعم غذائي: ركز على البروتين، الخضروات، وشرب الماء بكثرة، وقلل السكريات والدهون المشبعة</p>
+                </div>
+            </section>
+
+            <!-- تبويب التقويم -->
+            <section id="calendar" class="tab-content">
+                <h2 class="section-title">📅 جدول المتابعة الأسبوعي</h2>
+                <p class="section-desc">اضغط على المربع لتسجيل إكمال التمرين يدوياً</p>
+
                 <div class="calendar-grid">
-                    <div class="calendar-day-header">السبت</div>
-                    <div class="calendar-day-header">الأحد</div>
-                    <div class="calendar-day-header">الإثنين</div>
-                    <div class="calendar-day-header">الثلاثاء</div>
-                    <div class="calendar-day-header">الأربعاء</div>
-                    <div class="calendar-day-header">الخميس</div>
-                    <div class="calendar-day-header">الجمعة</div>
+                    <!-- رؤوس الأيام -->
+                    <div class="day-header">السبت</div>
+                    <div class="day-header">الأحد</div>
+                    <div class="day-header">الإثنين</div>
+                    <div class="day-header">الثلاثاء</div>
+                    <div class="day-header">الأربعاء</div>
+                    <div class="day-header">الخميس</div>
+                    <div class="day-header">الجمعة</div>
 
-                    <div class="calendar-day day-run">
-                        <i class="fa fa-running text-primary text-xl mb-1"></i>
-                        <p class="text-xs">ركض</p>
-                        <button onclick="markDay('السبت')" class="btn btn-primary btn-sm mt-1">✓</button>
+                    <!-- أيام الأسبوع -->
+                    <div class="day-card day-run" data-day="السبت">
+                        <i class="fa fa-running"></i>
+                        <span class="day-type">ركض</span>
+                        <button class="check-btn" aria-label="تحديد اليوم">
+                            <i class="fa fa-check"></i>
+                        </button>
                     </div>
-                    <div class="calendar-day day-exercise">
-                        <i class="fa fa-dumbbell text-success text-xl mb-1"></i>
-                        <p class="text-xs">تمارين</p>
-                        <button onclick="markDay('الأحد')" class="btn btn-success btn-sm mt-1">✓</button>
+
+                    <div class="day-card day-exercise" data-day="الأحد">
+                        <i class="fa fa-dumbbell"></i>
+                        <span class="day-type">تمارين</span>
+                        <button class="check-btn" aria-label="تحديد اليوم">
+                            <i class="fa fa-check"></i>
+                        </button>
                     </div>
-                    <div class="calendar-day day-run">
-                        <i class="fa fa-running text-primary text-xl mb-1"></i>
-                        <p class="text-xs">ركض</p>
-                        <button onclick="markDay('الإثنين')" class="btn btn-primary btn-sm mt-1">✓</button>
+
+                    <div class="day-card day-run" data-day="الإثنين">
+                        <i class="fa fa-running"></i>
+                        <span class="day-type">ركض</span>
+                        <button class="check-btn" aria-label="تحديد اليوم">
+                            <i class="fa fa-check"></i>
+                        </button>
                     </div>
-                    <div class="calendar-day day-exercise">
-                        <i class="fa fa-dumbbell text-success text-xl mb-1"></i>
-                        <p class="text-xs">تمارين</p>
-                        <button onclick="markDay('الثلاثاء')" class="btn btn-success btn-sm mt-1">✓</button>
+
+                    <div class="day-card day-exercise" data-day="الثلاثاء">
+                        <i class="fa fa-dumbbell"></i>
+                        <span class="day-type">تمارين</span>
+                        <button class="check-btn" aria-label="تحديد اليوم">
+                            <i class="fa fa-check"></i>
+                        </button>
                     </div>
-                    <div class="calendar-day day-run">
-                        <i class="fa fa-running text-primary text-xl mb-1"></i>
-                        <p class="text-xs">ركض</p>
-                        <button onclick="markDay('الأربعاء')" class="btn btn-primary btn-sm mt-1">✓</button>
+
+                    <div class="day-card day-run" data-day="الأربعاء">
+                        <i class="fa fa-running"></i>
+                        <span class="day-type">ركض</span>
+                        <button class="check-btn" aria-label="تحديد اليوم">
+                            <i class="fa fa-check"></i>
+                        </button>
                     </div>
-                    <div class="calendar-day day-exercise">
-                        <i class="fa fa-dumbbell text-success text-xl mb-1"></i>
-                        <p class="text-xs">تمارين</p>
-                        <button onclick="markDay('الخميس')" class="btn btn-success btn-sm mt-1">✓</button>
+
+                    <div class="day-card day-exercise" data-day="الخميس">
+                        <i class="fa fa-dumbbell"></i>
+                        <span class="day-type">تمارين</span>
+                        <button class="check-btn" aria-label="تحديد اليوم">
+                            <i class="fa fa-check"></i>
+                        </button>
                     </div>
-                    <div class="calendar-day day-rest">
-                        <i class="fa fa-bed text-gray-500 text-xl mb-1"></i>
-                        <p class="text-xs">راحة</p>
+
+                    <div class="day-card day-rest" data-day="الجمعة">
+                        <i class="fa fa-bed"></i>
+                        <span class="day-type">راحة</span>
+                        <span class="rest-note">يوم راحة</span>
                     </div>
+                </div>
+
+                <div class="stats-box">
+                    <h3>📊 ملخص الأسبوع</h3>
+                    <p>عدد الأيام المكتملة: <strong id="completedCount">0</strong> من 6 أيام تدريب</p>
+                    <button id="resetWeek" class="btn btn-secondary">إعادة تعيين الأسبوع</button>
                 </div>
             </section>
 
-            <section class="card mb-6">
-                <h3 class="text-lg font-bold text-primary dark:text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="fa fa-bell"></i> تذكير يومي
-                </h3>
-                <div class="space-y-4">
-                    <p class="text-sm text-gray-600 dark:text-gray-300">يمكنك ضبط وقت التذكير لتتذكر موعد التمرين:</p>
-                    <input type="time" id="reminderTime" class="form-input">
-                    <button onclick="setReminder()" class="btn btn-primary w-full">تفعيل التذكير</button>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">ملاحظة: يعمل التذكير إذا سمح المتصفح بالإشعارات</p>
-                </div>
-            </section>
-        </div>
+            <!-- تبويب الأدوات -->
+            <section id="tools" class="tab-content">
+                <h2 class="section-title">🛠️ أدوات مساعدة</h2>
 
-        <!-- ⏱️ تبويب الأدوات -->
-        <div id="toolsContent" class="content-block hidden">
-            <section class="card mb-6">
-                <h3 class="text-lg font-bold text-primary dark:text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="fa fa-clock-o"></i> مؤقتات تدريبية
-                </h3>
-
-                <div class="timer-container">
+                <div class="tool-card">
+                    <h3>⏱️ مؤقت تدريب</h3>
                     <div class="timer-display" id="timerDisplay">00:00</div>
-                    <div class="timer-buttons">
-                        <button onclick="setTimer(45)" class="btn btn-primary">45 ثانية (راحة)</button>
-                        <button onclick="setTimer(60)" class="btn btn-primary">دقيقة</button>
-                        <button onclick="setTimer(90)" class="btn btn-primary">دقيقة ونصف</button>
-                        <button onclick="setTimer(120)" class="btn btn-primary">دقيقتان</button>
-                        <button onclick="setTimer(30)" class="btn btn-success">30 ثانية (بلانك)</button>
-                        <button onclick="setTimer(45)" class="btn btn-warning">45 ثانية (جلوس)</button>
+                    <div class="timer-presets">
+                        <button class="preset-btn" data-time="30">30 ثانية</button>
+                        <button class="preset-btn" data-time="45">45 ثانية</button>
+                        <button class="preset-btn" data-time="60">دقيقة</button>
+                        <button class="preset-btn" data-time="120">دقيقتان</button>
                     </div>
                     <div class="timer-controls">
-                        <button onclick="startTimer()" class="btn btn-success w-24">بدء</button>
-                        <button onclick="pauseTimer()" class="btn btn-warning w-24">إيقاف</button>
-                        <button onclick="resetTimer()" class="btn btn-danger w-24">إعادة ضبط</button>
+                        <button id="startTimer" class="btn btn-success">بدء</button>
+                        <button id="pauseTimer" class="btn btn-warning">إيقاف</button>
+                        <button id="resetTimer" class="btn btn-danger">إعادة</button>
                     </div>
                 </div>
 
-                <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
-                    <h4 class="font-semibold mb-3 flex items-center gap-2">
-                        <i class="fa fa-pencil"></i> تعديل أهداف التمرين
-                    </h4>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">يمكنك تغيير عدد التكرارات أو الوقت إذا أردت زيادة التحدي:</p>
-                    <div class="space-y-3">
-                        <div>
-                            <label class="block text-sm mb-1">زيادة عدد التكرارات بنسبة:</label>
-                            <input type="range" min="0" max="50" value="0" class="w-full" id="increaseRange">
-                            <span class="text-xs text-gray-500" id="increaseValue">0%</span>
-                        </div>
-                        <button onclick="applyChanges()" class="btn btn-primary w-full">حفظ التعديلات</button>
+                <div class="tool-card">
+                    <h3>📝 ملاحظات شخصية</h3>
+                    <textarea id="notesArea" placeholder="اكتب ملاحظاتك هنا: شعورك، وزنك، صعوبة التمرين، إلخ..."></textarea>
+                    <button id="saveNotes" class="btn btn-primary w-full">حفظ الملاحظات</button>
+                    <div id="savedNotesList" class="notes-list"></div>
+                </div>
+            </section>
+
+            <!-- تبويب التقدم -->
+            <section id="progress" class="tab-content">
+                <h2 class="section-title">📈 تتبع التقدم</h2>
+
+                <div class="tool-card">
+                    <h3>⚖️ تسجيل الوزن</h3>
+                    <div class="weight-input-group">
+                        <input type="number" id="weightInput" placeholder="أدخل وزنك بالكيلوغرام" min="30" max="200" step="0.1">
+                        <button id="saveWeight" class="btn btn-primary">حفظ</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="weightChart"></canvas>
                     </div>
                 </div>
-            </section>
 
-            <section class="card">
-                <h3 class="text-lg font-bold text-primary dark:text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="fa fa-sticky-note"></i> ملاحظات شخصية
-                </h3>
-                <textarea id="notesInput" rows="4" placeholder="اكتب ملاحظاتك هنا (مثل: شعورك، ألم بسيط، تحسن، إلخ)" class="form-textarea"></textarea>
-                <button onclick="saveNotes()" class="btn btn-primary w-full mt-3">حفظ الملاحظات</button>
-                <div id="savedNotes" class="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-gray-700 dark:text-gray-300"></div>
-            </section>
-        </div>
-
-        <!-- 📈 تبويب تتبع التقدم -->
-        <div id="progressContent" class="content-block hidden">
-            <section class="card mb-6">
-                <h3 class="text-lg font-bold text-primary dark:text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="fa fa-balance-scale"></i> تتبع الوزن
-                </h3>
-                <div class="flex gap-3 mb-4">
-                    <input type="number" id="weightInput" placeholder="الوزن (كغم)" class="form-input flex-1">
-                    <button onclick="saveWeight()" class="btn btn-success">حفظ</button>
-                </div>
-                <div class="h-64">
-                    <canvas id="weightChart"></canvas>
-                </div>
-            </section>
-
-            <section class="card mb-6">
-                <h3 class="text-lg font-bold text-primary dark:text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="fa fa-list-check"></i> سجل التمارين
-                </h3>
-                <select id="stageSelect" onchange="loadExercises()" class="form-input w-full mb-4">
-                    <option value="1">المرحلة الأولى</option>
-                    <option value="2">المرحلة الثانية</option>
-                    <option value="3">المرحلة الثالثة</option>
-                </select>
-                <div id="exerciseLogContainer" class="space-y-4 mb-4"></div>
-                <button onclick="saveExerciseLog()" class="btn btn-primary w-full">حفظ السجل اليومي</button>
-            </section>
-
-            <section class="card">
-                <h3 class="text-lg font-bold text-primary dark:text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="fa fa-chart-line"></i> ملخص التقدم
-                </h3>
-                <div id="summaryContainer" class="space-y-4 text-sm">
-                    <p class="text-gray-500 dark:text-gray-400 text-center py-4">سيظهر ملخص أدائك هنا بعد تسجيل البيانات</p>
+                <div class="summary-card">
+                    <h3>📋 إحصائيات عامة</h3>
+                    <div id="progressSummary" class="summary-content">
+                        <p>سيتم عرض بياناتك هنا بعد بدء التسجيل</p>
+                    </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <script>
-        // --- إدارة الوضع الليلي ---
-        const themeToggle = document.getElementById('themeToggle');
-        if (localStorage.getItem('theme') === 'dark' || 
-            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-        });
-
-        // --- تبديل التبويبات ---
-        const tabPlan = document.getElementById('tabPlan');
-        const tabCalendar = document.getElementById('tabCalendar');
-        const tabTools = document.getElementById('tabTools');
-        const tabProgress = document.getElementById('tabProgress');
-
-        const planContent = document.getElementById('planContent');
-        const calendarContent = document.getElementById('calendarContent');
-        const toolsContent = document.getElementById('toolsContent');
-        const progressContent = document.getElementById('progressContent');
-
-        function switchTab(activeTab, activeContent) {
-            document.querySelectorAll('.tab').forEach(t => {
-                t.classList.remove('tab-active');
-                t.classList.add('tab-inactive');
-            });
-            document.querySelectorAll('.content-block').forEach(c => c.classList.add('hidden'));
-            
-            activeTab.classList.remove('tab-inactive');
-            activeTab.classList.add('tab-active');
-            activeContent.classList.remove('hidden');
-
-            if (activeTab === tabProgress) {
-                initWeightChart();
-                loadExercises();
-                loadSummary();
-            }
-            if (activeTab === tabTools) loadNotes();
-        }
-
-        tabPlan.addEventListener('click', () => switchTab(tabPlan, planContent));
-        tabCalendar.addEventListener('click', () => switchTab(tabCalendar, calendarContent));
-        tabTools.addEventListener('click', () => switchTab(tabTools, toolsContent));
-        tabProgress.addEventListener('click', () => switchTab(tabProgress, progressContent));
-
-        // --- التقويم وتحديد الأيام ---
-        function markDay(day) {
-            const completed = JSON.parse(localStorage.getItem('completedDays')) || [];
-            if (!completed.includes(day)) {
-                completed.push(day);
-                localStorage.setItem('completedDays', JSON.stringify(completed));
-                alert(`تم تسجيل إكمال يوم ${day} ✅`);
-                loadSummary();
-            } else {
-                alert('هذا اليوم مسجل مسبقاً');
-            }
-        }
-
-        // --- التذكيرات ---
-        async function setReminder() {
-            const time = document.getElementById('reminderTime').value;
-            if (!time) { alert('يرجى اختيار وقت'); return; }
-            if (!('Notification' in window)) { alert('المتصفح لا يدعم الإشعارات'); return; }
-            
-            const permission = await Notification.requestPermission();
-            if (permission === 'granted') {
-                localStorage.setItem('reminderTime', time);
-                alert('تم ضبط التذكير بنجاح ✅');
-            } else {
-                alert('لم يتم السماح بالإشعارات');
-            }
-        }
-
-        // --- المؤقتات ---
-        let timerInterval;
-        let timerSeconds = 0;
-        const timerDisplay = document.getElementById('timerDisplay');
-
-        function setTimer(sec) {
-            clearInterval(timerInterval);
-            timerSeconds = sec;
-            updateTimerDisplay();
-        }
-        function updateTimerDisplay() {
-            const min = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-            const sec = (timerSeconds % 60).toString().padStart(2, '0');
-            timerDisplay.textContent = `${min}:${sec}`;
-        }
-        function startTimer() {
-            if (timerSeconds <= 0) return;
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timerSeconds--;
-                updateTimerDisplay();
-                if (timerSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    alert('انتهى الوقت!');
-                }
-            }, 1000);
-        }
-        function pauseTimer() { clearInterval(timerInterval); }
-        function resetTimer() { clearInterval(timerInterval); timerSeconds = 0; updateTimerDisplay(); }
-
-        // --- الملاحظات ---
-        function saveNotes() {
-            const notes = document.getElementById('notesInput').value.trim();
-            if (!notes) return;
-            const today = new Date().toLocaleDateString('ar-EG');
-            const allNotes = JSON.parse(localStorage.getItem('personalNotes')) || [];
-            allNotes.unshift({date: today, text: notes});
-            localStorage.setItem('personalNotes', JSON.stringify(allNotes.slice(0, 10)));
-            alert('تم حفظ الملاحظة ✅');
-            document.getElementById('notesInput').value = '';
-            loadNotes();
-        }
-        function loadNotes() {
-            const notes = JSON.parse(localStorage.getItem('personalNotes')) || [];
-            document.getElementById('savedNotes').innerHTML = notes.length 
-                ? notes.map(n => `<div class="border-b border-gray-200 dark:border-gray-700 py-2"><span class="font-semibold text-primary">📅 ${n.date}:</span> ${n.text}</div>`).join('')
-                : '<p class="text-gray-500">لا توجد ملاحظات محفوظة</p>';
-        }
-
-        // --- تتبع الوزن والرسم البياني ---
-        let weightChart;
-        function initWeightChart() {
-            const ctx = document.getElementById('weightChart').getContext('2d');
-            const weights = JSON.parse(localStorage.getItem('weightHistory')) || [];
-            const labels = weights.map(e => e.date);
-            const data = weights.map(e => e.weight);
-
-            if (weightChart) weightChart.destroy();
-            weightChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'الوزن (كغم)',
-                        data: data,
-                        borderColor: '#2563eb',
-                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, rtl: true }
-            });
-        }
-        function saveWeight() {
-            const weight = parseFloat(document.getElementById('weightInput').value);
-            if (!weight || weight < 40 || weight > 200) { alert('أدخل وزناً صالحاً'); return; }
-            const today = new Date().toLocaleDateString('ar-EG');
-            const history = JSON.parse(localStorage.getItem('weightHistory')) || [];
-            const existing = history.findIndex(e => e.date === today);
-            if (existing !== -1) history.splice(existing, 1);
-            history.push({date: today, weight: weight});
-            localStorage.setItem('weightHistory', JSON.stringify(history));
-            document.getElementById('weightInput').value = '';
-            initWeightChart();
-            loadSummary();
-            alert('تم حفظ الوزن ✅');
-        }
-
-        // --- سجل التمارين ---
-        const exerciseData = {
-            1: [
-                {id: 'p1', name: 'الضغط المائل', target: '3×12'},
-                {id: 's1', name: 'سكوات على كرسي', target: '3×12'},
-                {id: 'pl1', name: 'البلانك', target: '3×30-40 ثانية'},
-                {id: 'g1', name: 'جسر الحوض', target: '3×15'},
-                {id: 'c1', name: 'تسلق الجبال', target: '3×30 ثانية'}
-            ],
-            2: [
-                {id: 'p2', name: 'الضغط المستوي', target: '3×12-15'},
-                {id: 'l2', name: 'الطعن الخلفي', target: '3×10 لكل رجل'},
-                {id: 'r2', name: 'رفع الأرجل', target: '3×12'},
-                {id: 't2', name: 'التويست الروسي', target: '3×20'},
-                {id: 'pl2', name: 'البلانك', target: '3×50 ثانية'}
-            ],
-            3: [
-                {id: 'd3', name: 'الضغط الضيق', target: '10 تكرارات'},
-                {id: 'w3', name: 'الجلوس على الحائط', target: '45 ثانية'},
-                {id: 'b3', name: 'طحن الدراجة', target: '20 تكرار'},
-                {id: 'dc3', name: 'الضغط المعكوس', target: '10 تكرارات'},
-                {id: 'f3', name: 'رفرفة الأرجل', target: '30 ثانية'}
-            ]
-        };
-        function loadExercises() {
-            const stage = document.getElementById('stageSelect').value;
-            const container = document.getElementById('exerciseLogContainer');
-            const exercises = exerciseData[stage];
-            container.innerHTML = exercises.map(ex => `
-                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
-                    <div class="flex justify-between mb-2">
-                        <span class="font-medium">${ex.name}</span>
-                        <span class="text-xs text-gray-500">المستهدف: ${ex.target}</span>
-                    </div>
-                    <input type="text" id="${ex.id}" placeholder="مثال: 3×12 أو 40 ثانية" class="form-input w-full">
-                </div>
-            `).join('');
-        }
-        function saveExerciseLog() {
-            const stage = document.getElementById('stageSelect').value;
-            const exercises = exerciseData[stage];
-            const today = new Date().toLocaleDateString('ar-EG');
-            const log = {date: today, stage: stage, exercises: {}};
-            let hasData = false;
-            exercises.forEach(ex => {
-                const val = document.getElementById(ex.id).value.trim();
-                if (val) { log.exercises[ex.name] = val; hasData = true; }
-            });
-            if (!hasData) { alert('أدخل بيانات تمرين واحد على الأقل'); return; }
-            const history = JSON.parse(localStorage.getItem('exerciseHistory')) || [];
-            const existing = history.findIndex(e => e.date === today && e.stage === stage);
-            if (existing !== -1) history.splice(existing, 1);
-            history.push(log);
-            localStorage.setItem('exerciseHistory', JSON.stringify(history));
-            exercises.forEach(ex => document.getElementById(ex.id).value = '');
-            loadSummary();
-            alert('تم حفظ السجل ✅');
-        }
-
-        // --- ملخص التقدم ---
-        function loadSummary() {
-            const completed = JSON.parse(localStorage.getItem('completedDays')) || [];
-            const weightHistory = JSON.parse(localStorage.getItem('weightHistory')) || [];
-            const exerciseHistory = JSON.parse(localStorage.getItem('exerciseHistory')) || [];
-            const summaryContainer = document.getElementById('summaryContainer');
-
-            if (completed.length === 0 && weightHistory.length === 0 && exerciseHistory.length === 0) {
-                summaryContainer.innerHTML = '<p class="text-gray-500 text-center py-4">لم يتم تسجيل أي بيانات بعد</p>';
-                return;
-            }
-
-            let html = `
-                <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                    <h4 class="font-semibold text-primary mb-2">📊 إحصائيات عامة</h4>
-                    <p>عدد الأيام المكتملة: <strong>${completed.length}</strong> يوم</p>
-                    <p>عدد سجلات التمارين: <strong>${exerciseHistory.length}</strong> سجل</p>
-                    ${weightHistory.length >= 2 ? `<p>تغير الوزن: <strong>${(weightHistory[0].weight - weightHistory[weightHistory.length-1].weight).toFixed(1)} كغم</strong> منذ البداية</p>` : ''}
-                </div>
-            `;
-
-            if (completed.length >= 12) {
-                html += `<div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg mt-3 text-green-800 dark:text-green-300">
-                    🎉 مبروك! لقد أكملت أكثر من 4 أسابيع من التمرين، استمر على هذا المنوال!
-                </div>`;
-            }
-
-            summaryContainer.innerHTML = html;
-        }
-
-        // --- تحديث قيمة النطاق ---
-        const increaseRange = document.getElementById('increaseRange');
-        const increaseValue = document.getElementById('increaseValue');
-        if (increaseRange && increaseValue) {
-            increaseRange.addEventListener('input', e => {
-                increaseValue.textContent = `${e.target.value}%`;
-            });
-        }
-        function applyChanges() {
-            const percent = document.getElementById('increaseRange').value;
-            localStorage.setItem('increasePercent', percent);
-            alert(`تم تطبيق زيادة بنسبة ${percent}% على جميع الأهداف ✅`);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
