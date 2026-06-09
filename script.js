@@ -33,6 +33,7 @@ tabButtons.forEach(btn => {
 
         if (target === 'calendar') renderCalendar();
         if (target === 'tools') initTools();
+        if (target === 'progress') initProgress();
     });
 });
 
@@ -63,6 +64,7 @@ let workoutProgress = JSON.parse(localStorage.getItem('workoutProgress')) || {
     currentRound: 1,
     completed: false
 };
+let weightRecords = JSON.parse(localStorage.getItem('weightRecords')) || [];
 
 // ==============================================
 // وظائف مساعدة
@@ -90,7 +92,6 @@ function renderCalendar() {
     const showAllBtn = document.getElementById('showAllDaysBtn');
     const completedCountEl = document.getElementById('completedCount');
 
-    // عرض اليوم الحالي
     const icons = { run: 'fa-running', exercise: 'fa-dumbbell', rest: 'fa-bed' };
     const labels = { run: 'ركض', exercise: 'تمارين', rest: 'راحة' };
     const isCompleted = daysCompleted.includes(today);
@@ -109,7 +110,6 @@ function renderCalendar() {
         </div>
     `;
 
-    // حدث زر تحديد اليوم
     const markTodayBtn = document.getElementById('markTodayBtn');
     if (markTodayBtn) {
         markTodayBtn.addEventListener('click', () => {
@@ -123,13 +123,9 @@ function renderCalendar() {
         });
     }
 
-    // عرض باقي الأيام
     showAllBtn.onclick = () => allDaysContainer.classList.toggle('hidden');
-
-    // تحديث عداد الأيام
     updateCompletedCount();
 
-    // إعادة تعيين الأسبوع
     document.getElementById('resetWeek').onclick = () => {
         if (confirm('هل تريد إعادة تعيين تقدم الأسبوع؟')) {
             daysCompleted = [];
@@ -144,7 +140,7 @@ function updateCompletedCount() {
 }
 
 // ==============================================
-// قسم الأدوات والمؤقت
+// قسم الأدوات - مؤقت قابل للتعديل يدوياً
 // ==============================================
 let timerInterval = null;
 let timerSeconds = 0;
@@ -153,7 +149,6 @@ function initTools() {
     const todayType = getTodayType();
     const workoutSection = document.getElementById('workoutSequenceSection');
 
-    // إظهار التمارين فقط في أيام التمرين
     if (todayType === 'exercise') {
         workoutSection.style.display = 'block';
         updateExerciseDisplay();
@@ -161,10 +156,9 @@ function initTools() {
         workoutSection.style.display = 'none';
     }
 
-    // إعداد المؤقت
     initTimer();
+    initNotes();
 
-    // زر إكمال التمرين
     document.getElementById('completeExerciseBtn').onclick = () => {
         const exercises = workoutStages[currentStage].exercises;
         const total = exercises.length;
@@ -225,9 +219,41 @@ function initTimer() {
         return `${m}:${s}`;
     }
 
+    function parseTimeToSeconds(timeStr) {
+        const parts = timeStr.split(':');
+        if (parts.length === 2) {
+            const m = parseInt(parts[0]) || 0;
+            const s = parseInt(parts[1]) || 0;
+            return Math.max(0, m * 60 + s);
+        }
+        return 0;
+    }
+
     function updateDisplay() {
         display.textContent = formatTime(timerSeconds);
     }
+
+    // ✅ إمكانية التعديل اليدوي
+    display.addEventListener('click', () => {
+        clearInterval(timerInterval);
+        display.contentEditable = true;
+        display.focus();
+        display.select();
+    });
+
+    display.addEventListener('blur', () => {
+        display.contentEditable = false;
+        const inputText = display.textContent.trim();
+        timerSeconds = parseTimeToSeconds(inputText);
+        updateDisplay();
+    });
+
+    display.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            display.blur();
+        }
+    });
 
     presets.forEach(btn => {
         btn.onclick = () => {
@@ -245,6 +271,7 @@ function initTimer() {
                 updateDisplay();
             } else {
                 clearInterval(timerInterval);
+                timerInterval = null;
                 alert('انتهى الوقت!');
             }
         }, 1000);
@@ -261,6 +288,85 @@ function initTimer() {
         timerSeconds = 0;
         updateDisplay();
     };
+}
+
+function initNotes() {
+    const notesArea = document.getElementById('notesArea');
+    const saveNotesBtn = document.getElementById('saveNotes');
+    const savedNotes = localStorage.getItem('personalNotes') || '';
+    notesArea.value = savedNotes;
+
+    saveNotesBtn.onclick = () => {
+        localStorage.setItem('personalNotes', notesArea.value.trim());
+        alert('تم حفظ الملاحظات بنجاح!');
+    };
+}
+
+// ==============================================
+// ✅ قسم التقدم - حفظ الوزن يعمل الآن
+// ==============================================
+function initProgress() {
+    const weightInput = document.getElementById('weightInput');
+    const saveWeightBtn = document.getElementById('saveWeight');
+    let weightChart = null;
+
+    saveWeightBtn.onclick = () => {
+        const weightVal = parseFloat(weightInput.value);
+        if (!weightVal || weightVal < 30 || weightVal > 200) {
+            alert('يرجى إدخال وزن صالح بين 30 و 200 كجم');
+            return;
+        }
+
+        const today = new Date().toLocaleDateString('ar-IQ');
+        weightRecords.push({ date: today, weight: weightVal });
+        localStorage.setItem('weightRecords', JSON.stringify(weightRecords));
+        
+        weightInput.value = '';
+        alert('تم حفظ الوزن بنجاح!');
+        renderWeightChart();
+    };
+
+    function renderWeightChart() {
+        const ctx = document.getElementById('weightChart').getContext('2d');
+        if (weightChart) weightChart.destroy();
+
+        if (weightRecords.length === 0) {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            ctx.font = '16px Arial';
+            ctx.fillStyle = 'var(--gray-700)';
+            ctx.textAlign = 'center';
+            ctx.fillText('لا توجد بيانات وزن مسجلة بعد', ctx.canvas.width / 2, ctx.canvas.height / 2);
+            return;
+        }
+
+        const labels = weightRecords.map(r => r.date);
+        const data = weightRecords.map(r => r.weight);
+
+        weightChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'الوزن (كجم)',
+                    data: data,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    tension: 0.3,
+                    fill: true,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: false }
+                }
+            }
+        });
+    }
+
+    renderWeightChart();
 }
 
 // ==============================================
