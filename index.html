@@ -9,14 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <!-- الهيدر -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <h1 class="site-title">
-                    <i class="fa fa-dumbbell"></i> خطة التدريب
-                </h1>
-                <button id="themeToggle" class="theme-btn" aria-label="تبديل الوضع">
+                <h1 class="site-title"><i class="fa fa-dumbbell"></i> خطة التدريب</h1>
+                <button id="themeToggle" class="theme-btn">
                     <i class="fa fa-moon-o dark-hidden"></i>
                     <i class="fa fa-sun-o dark-show"></i>
                 </button>
@@ -24,7 +21,6 @@
         </div>
     </header>
 
-    <!-- شريط التبويبات -->
     <nav class="tabs-nav">
         <div class="container">
             <div class="tabs-container">
@@ -36,7 +32,6 @@
         </div>
     </nav>
 
-    <!-- المحتوى الرئيسي -->
     <main class="main-content">
         <div class="container">
             <!-- تبويب الخطة -->
@@ -46,152 +41,40 @@
                     <div>
                         <strong>تنبيهات هامة:</strong>
                         <ul>
-                            <li>في السكوات: انزل حتى الفخذ موازياً للأرض، لا تُجهد الركبة</li>
-                            <li>الركض: يفضل على تراب أو عشب، واستخدم حذاء مريح</li>
+                            <li>في السكوات: انزل حتى الفخذ موازياً للأرض</li>
+                            <li>الركض: يفضل على تراب أو عشب</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- عرض المرحلة الحالية -->
                 <div class="stage-card current-stage">
                     <div class="stage-header">
                         <span class="stage-badge" id="currentStageBadge">1</span>
                         <h2 id="currentStageTitle">المرحلة الأولى - الشهر الأول</h2>
                     </div>
-                    <p class="stage-goal" id="currentStageGoal">🎯 الهدف: تهيئة الجسم، رفع اللياقة، وتقوية العضلات الأساسية</p>
+                    <p class="stage-goal" id="currentStageGoal">🎯 الهدف: تهيئة الجسم</p>
                     <div class="progress-month">
                         <span>تقدم الشهر: <strong id="monthProgress">0 / 30 يوم</strong></span>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="monthProgressFill"></div>
-                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="monthProgressFill"></div></div>
                     </div>
                 </div>
 
-                <!-- رسالة أيام الركض -->
-                <div class="run-day-message" id="runDayMessage" style="display: none;">
-                    <h3 class="section-title">🏃‍♂️ يوم ركض</h3>
-                    <p>الخطة لهذا اليوم: 5 دقائق إحماء → 15 دقيقة هرولة خفيفة → 5 دقائق تهدئة</p>
+                <div id="runDayMessage" class="run-day-message" style="display:none;">
+                    <h3>🏃‍♂️ يوم ركض</h3>
+                    <p>5 دقائق إحماء → 15 دقيقة هرولة → 5 دقائق تهدئة</p>
                 </div>
 
-                <!-- رسالة أيام الراحة -->
-                <div class="rest-day-message" id="restDayMessage" style="display: none;">
-                    <h3 class="section-title">😴 يوم راحة</h3>
-                    <p>يوم مخصص للاستشفاء واستعادة طاقة الجسم</p>
+                <div id="restDayMessage" class="rest-day-message" style="display:none;">
+                    <h3>😴 يوم راحة</h3>
+                    <p>يوم استشفاء واستعادة الطاقة</p>
                 </div>
 
-                <!-- قائمة التمارين الكاملة -->
                 <div class="full-plan-preview">
-                    <h3>📋 نظرة عامة على الخطة الكاملة</h3>
-                    
+                    <h3>📋 الخطة الكاملة</h3>
                     <div class="stage-card stage-1">
-                        <div class="stage-header">
-                            <span class="stage-badge">1</span>
-                            <h2>المرحلة الأولى - الشهر الأول</h2>
-                        </div>
-                        <p class="stage-goal">🎯 الهدف: تهيئة الجسم، رفع اللياقة، وتقوية العضلات الأساسية</p>
-                        
-                        <div class="routine-block">
-                            <h3 class="routine-title">🏃‍♂️ أيام الركض: السبت - الإثنين - الأربعاء</h3>
-                            <p>5 دقائق مشي إحماء → 15 دقيقة هرولة خفيفة → 5 دقائق تهدئة</p>
-                        </div>
-
-                        <div class="routine-block">
-                            <h3 class="routine-title">💪 أيام التمارين: الأحد - الثلاثاء - الخميس</h3>
-                            <div class="table-responsive">
-                                <table class="exercise-table">
-                                    <thead>
-                                        <tr>
-                                            <th>التمرين</th>
-                                            <th>المجموعات × التكرار</th>
-                                            <th>ملاحظات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>الضغط المائل</td><td>3 × 12</td><td>يداك على حافة سرير</td></tr>
-                                        <tr><td>سكوات على كرسي</td><td>3 × 12</td><td>آمن تماماً للركبة</td></tr>
-                                        <tr><td>البلانك</td><td>3 × 30-40 ثانية</td><td>حافظ على استقامة الجسم</td></tr>
-                                        <tr><td>جسر الحوض</td><td>3 × 15</td><td>يقوي أسفل الظهر والأرداف</td></tr>
-                                        <tr><td>تسلق الجبال</td><td>3 × 30 ثانية</td><td>بوتيرة معتدلة</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stage-card stage-2">
-                        <div class="stage-header">
-                            <span class="stage-badge">2</span>
-                            <h2>المرحلة الثانية - الشهر الثاني</h2>
-                        </div>
-                        <p class="stage-goal">🎯 الهدف: زيادة الكثافة، حرق الدهون، وتحسين التحمل</p>
-                        
-                        <div class="routine-block">
-                            <h3 class="routine-title">🏃‍♂️ ركض متقطع: 3 أيام أسبوعياً</h3>
-                            <p>5 دقائق إحماء → (1 دقيقة ركض سريع + 2 دقيقة مشي) × 5 → 5 دقائق تهدئة</p>
-                        </div>
-
-                        <div class="routine-block">
-                            <h3 class="routine-title">💪 تمارين القوة</h3>
-                            <div class="exercise-cards">
-                                <div class="exercise-item">
-                                    <h4>الضغط الأرضي</h4>
-                                    <p>3 × 12-15 تكرار</p>
-                                </div>
-                                <div class="exercise-item">
-                                    <h4>الطعن الخلفي</h4>
-                                    <p>3 × 10 لكل ساق</p>
-                                </div>
-                                <div class="exercise-item">
-                                    <h4>رفع الأرجل</h4>
-                                    <p>3 × 12 تكرار</p>
-                                </div>
-                                <div class="exercise-item">
-                                    <h4>البلانك الجانبي</h4>
-                                    <p>3 × 30 ثانية لكل جانب</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stage-card stage-3">
-                        <div class="stage-header">
-                            <span class="stage-badge">3</span>
-                            <h2>المرحلة الثالثة - الشهر الثالث</h2>
-                        </div>
-                        <p class="stage-goal">🎯 الهدف: نحت الجسم، رفع مستوى الحرق، وتثبيت العادات</p>
-                        
-                        <div class="routine-block">
-                            <h3 class="routine-title">🏃‍♂️ ركض مكثف</h3>
-                            <p>زيادة مدة الفترات وعدد الدورات، أو استبدالها بتمارين هوائية عالية الكثافة</p>
-                        </div>
-
-                        <div class="routine-block">
-                            <h3 class="routine-title">💪 نظام الدائرة</h3>
-                            <p>أداء التمارين متتالية دون راحة، ثم راحة دقيقتين بعد انتهاء المجموعة</p>
-                            <div class="exercise-cards">
-                                <div class="exercise-item">
-                                    <h4>الضغط الضيق</h4>
-                                    <p>12 تكرار</p>
-                                </div>
-                                <div class="exercise-item">
-                                    <h4>الجلوس على الحائط</h4>
-                                    <p>45 ثانية</p>
-                                </div>
-                                <div class="exercise-item">
-                                    <h4>طحن البطن</h4>
-                                    <p>15 تكرار</p>
-                                </div>
-                                <div class="exercise-item">
-                                    <h4>رفرفة الأرجل</h4>
-                                    <p>30 ثانية</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="nutrition-card">
-                        <h3>🥗 التغذية السليمة</h3>
-                        <p>التمارين تحتاج إلى دعم غذائي: ركز على البروتين، الخضروات، وشرب الماء بكثرة، وقلل السكريات والدهون المشبعة</p>
+                        <h3>المرحلة الأولى</h3>
+                        <p>أيام الركض: السبت، الإثنين، الأربعاء</p>
+                        <p>أيام التمارين: الأحد، الثلاثاء، الخميس</p>
                     </div>
                 </div>
             </section>
@@ -199,13 +82,8 @@
             <!-- تبويب التقويم -->
             <section id="calendar" class="tab-content">
                 <h2 class="section-title">📅 جدول المتابعة</h2>
-                <p class="section-desc">يظهر اليوم الحالي تلقائياً</p>
-
-                <!-- عرض اليوم الحالي -->
-                <div class="today-container" id="todayContainer"></div>
-
-                <button id="showAllDaysBtn" class="btn btn-secondary w-full mt-4">عرض باقي أيام الأسبوع</button>
-
+                <div id="todayContainer"></div>
+                <button id="showAllDaysBtn" class="btn btn-secondary w-full mt-4">عرض باقي الأسبوع</button>
                 <div id="allDaysContainer" class="calendar-grid hidden mt-4">
                     <div class="day-header">السبت</div>
                     <div class="day-header">الأحد</div>
@@ -216,79 +94,50 @@
                     <div class="day-header">الجمعة</div>
 
                     <div class="day-card day-run" data-day="السبت">
-                        <i class="fa fa-running"></i>
-                        <span class="day-type">ركض</span>
-                        <button class="check-btn" aria-label="تحديد اليوم">
-                            <i class="fa fa-check"></i>
-                        </button>
+                        <i class="fa fa-running"></i><span>ركض</span>
+                        <button class="check-btn"><i class="fa fa-check"></i></button>
                     </div>
-
                     <div class="day-card day-exercise" data-day="الأحد">
-                        <i class="fa fa-dumbbell"></i>
-                        <span class="day-type">تمارين</span>
-                        <button class="check-btn" aria-label="تحديد اليوم">
-                            <i class="fa fa-check"></i>
-                        </button>
+                        <i class="fa fa-dumbbell"></i><span>تمارين</span>
+                        <button class="check-btn"><i class="fa fa-check"></i></button>
                     </div>
-
                     <div class="day-card day-run" data-day="الإثنين">
-                        <i class="fa fa-running"></i>
-                        <span class="day-type">ركض</span>
-                        <button class="check-btn" aria-label="تحديد اليوم">
-                            <i class="fa fa-check"></i>
-                        </button>
+                        <i class="fa fa-running"></i><span>ركض</span>
+                        <button class="check-btn"><i class="fa fa-check"></i></button>
                     </div>
-
                     <div class="day-card day-exercise" data-day="الثلاثاء">
-                        <i class="fa fa-dumbbell"></i>
-                        <span class="day-type">تمارين</span>
-                        <button class="check-btn" aria-label="تحديد اليوم">
-                            <i class="fa fa-check"></i>
-                        </button>
+                        <i class="fa fa-dumbbell"></i><span>تمارين</span>
+                        <button class="check-btn"><i class="fa fa-check"></i></button>
                     </div>
-
                     <div class="day-card day-run" data-day="الأربعاء">
-                        <i class="fa fa-running"></i>
-                        <span class="day-type">ركض</span>
-                        <button class="check-btn" aria-label="تحديد اليوم">
-                            <i class="fa fa-check"></i>
-                        </button>
+                        <i class="fa fa-running"></i><span>ركض</span>
+                        <button class="check-btn"><i class="fa fa-check"></i></button>
                     </div>
-
                     <div class="day-card day-exercise" data-day="الخميس">
-                        <i class="fa fa-dumbbell"></i>
-                        <span class="day-type">تمارين</span>
-                        <button class="check-btn" aria-label="تحديد اليوم">
-                            <i class="fa fa-check"></i>
-                        </button>
+                        <i class="fa fa-dumbbell"></i><span>تمارين</span>
+                        <button class="check-btn"><i class="fa fa-check"></i></button>
                     </div>
-
                     <div class="day-card day-rest" data-day="الجمعة">
-                        <i class="fa fa-bed"></i>
-                        <span class="day-type">راحة</span>
-                        <span class="rest-note">يوم راحة</span>
+                        <i class="fa fa-bed"></i><span>راحة</span>
                     </div>
                 </div>
-
                 <div class="stats-box mt-4">
-                    <h3>📊 ملخص التقدم</h3>
-                    <p>عدد الأيام المكتملة: <strong id="completedCount">0</strong> من 6 أيام تدريب</p>
-                    <button id="resetWeek" class="btn btn-secondary">إعادة تعيين الأسبوع</button>
+                    <p>الأيام المكتملة: <strong id="completedCount">0</strong></p>
+                    <button id="resetWeek" class="btn btn-secondary">إعادة تعيين</button>
                 </div>
             </section>
 
             <!-- تبويب الأدوات -->
             <section id="tools" class="tab-content">
                 <h2 class="section-title">🛠️ أدوات مساعدة</h2>
-
                 <div class="tool-card">
-                    <h3>⏱️ مؤقت التمرين</h3>
+                    <h3>⏱️ المؤقت</h3>
                     <div class="timer-display" id="timerDisplay">00:00</div>
                     <div class="timer-presets">
-                        <button class="preset-btn" data-time="30">30 ثانية</button>
-                        <button class="preset-btn" data-time="45">45 ثانية</button>
-                        <button class="preset-btn" data-time="60">دقيقة</button>
-                        <button class="preset-btn" data-time="120">دقيقتان</button>
+                        <button class="preset-btn" data-time="30">30ث</button>
+                        <button class="preset-btn" data-time="45">45ث</button>
+                        <button class="preset-btn" data-time="60">1د</button>
+                        <button class="preset-btn" data-time="120">2د</button>
                     </div>
                     <div class="timer-controls">
                         <button id="startTimer" class="btn btn-success">بدء</button>
@@ -296,47 +145,35 @@
                         <button id="resetTimer" class="btn btn-danger">إعادة</button>
                     </div>
 
-                    <!-- 👇 قسم التمارين يظهر هنا فقط في أيام التمرين -->
-                    <div id="workoutSequenceSection" style="display: none; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
-                        <h3 class="section-title">💪 تسلسل التمارين</h3>
+                    <div id="workoutSequenceSection" style="display:none; margin-top:2rem; border-top:1px solid var(--border); padding-top:1.5rem;">
+                        <h3>💪 تمارين اليوم</h3>
                         <div class="current-exercise-card">
-                            <h4 class="exercise-name" id="currentExerciseName">اسم التمرين</h4>
-                            <p class="exercise-sets-reps" id="currentExerciseDetails">3 × 12</p>
-                            <p class="exercise-note" id="currentExerciseNote">ملاحظة</p>
-                            <p class="sequence-info">الدورة: <span id="currentRound">1</span> / 3 | التمرين: <span id="currentExerciseIndex">1</span> / <span id="totalExercises">5</span></p>
-                            <button class="btn btn-primary w-full mt-3" id="completeExerciseBtn">✓ إكمال التمرين والانتقال للتالي</button>
+                            <h4 id="currentExerciseName">اسم التمرين</h4>
+                            <p id="currentExerciseDetails">3 × 12</p>
+                            <p id="currentExerciseNote">ملاحظة</p>
+                            <p>الدورة: <span id="currentRound">1</span>/3 | التمرين: <span id="currentExerciseIndex">1</span>/<span id="totalExercises">5</span></p>
+                            <button id="completeExerciseBtn" class="btn btn-primary w-full mt-3">✓ إكمال والانتقال</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="tool-card">
-                    <h3>📝 ملاحظات شخصية</h3>
-                    <textarea id="notesArea" placeholder="اكتب ملاحظاتك هنا: شعورك، وزنك، صعوبة التمرين، إلخ..."></textarea>
-                    <button id="saveNotes" class="btn btn-primary w-full">حفظ الملاحظات</button>
-                    <div id="savedNotesList" class="notes-list"></div>
+                    <h3>📝 ملاحظات</h3>
+                    <textarea id="notesArea" rows="4"></textarea>
+                    <button id="saveNotes" class="btn btn-primary w-full mt-2">حفظ الملاحظات</button>
                 </div>
             </section>
 
             <!-- تبويب التقدم -->
             <section id="progress" class="tab-content">
                 <h2 class="section-title">📈 تتبع التقدم</h2>
-
                 <div class="tool-card">
-                    <h3>⚖️ تسجيل الوزن</h3>
+                    <h3>⚖️ الوزن</h3>
                     <div class="weight-input-group">
-                        <input type="number" id="weightInput" placeholder="أدخل وزنك بالكيلوغرام" min="30" max="200" step="0.1">
+                        <input type="number" id="weightInput" placeholder="الوزن" step="0.1">
                         <button id="saveWeight" class="btn btn-primary">حفظ</button>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="weightChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <h3>📋 إحصائيات عامة</h3>
-                    <div id="progressSummary" class="summary-content">
-                        <p>سيتم عرض بياناتك هنا بعد بدء التسجيل</p>
-                    </div>
+                    <div class="chart-container"><canvas id="weightChart"></canvas></div>
                 </div>
             </section>
         </div>

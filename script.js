@@ -1,5 +1,5 @@
 // ==============================================
-// إدارة الوضع الداكن
+// الوضع الداكن
 // ==============================================
 const themeToggle = document.getElementById('themeToggle');
 const htmlEl = document.documentElement;
@@ -7,10 +7,13 @@ const htmlEl = document.documentElement;
 if (localStorage.getItem('theme') === 'dark' || 
     (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     htmlEl.classList.add('dark');
+} else {
+    htmlEl.classList.add('light');
 }
 
 themeToggle.addEventListener('click', () => {
     htmlEl.classList.toggle('dark');
+    htmlEl.classList.toggle('light');
     localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
 });
 
@@ -23,74 +26,50 @@ const tabContents = document.querySelectorAll('.tab-content');
 tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
         const target = btn.dataset.tab;
-        
         tabButtons.forEach(b => b.classList.remove('active'));
         tabContents.forEach(c => c.classList.remove('active'));
-        
         btn.classList.add('active');
         document.getElementById(target).classList.add('active');
 
         if (target === 'calendar') renderCalendar();
-        if (target === 'tools') updateToolsView();
-        if (target === 'plan') updatePlanView();
+        if (target === 'tools') initTools();
     });
 });
 
 // ==============================================
-// بيانات الخطة والمراحل
+// بيانات الخطة
 // ==============================================
 const workoutStages = {
     1: {
         title: "المرحلة الأولى - الشهر الأول",
-        goal: "🎯 الهدف: تهيئة الجسم، رفع اللياقة، وتقوية العضلات الأساسية",
+        goal: "تهيئة الجسم ورفع اللياقة",
         exercises: [
             { name: "الضغط المائل", sets: "3", reps: "12", note: "يداك على حافة سرير" },
-            { name: "سكوات على كرسي", sets: "3", reps: "12", note: "آمن تماماً للركبة" },
-            { name: "البلانك", sets: "3", reps: "30-40 ثانية", note: "حافظ على استقامة الجسم" },
-            { name: "جسر الحوض", sets: "3", reps: "15", note: "يقوي أسفل الظهر والأرداف" },
+            { name: "سكوات على كرسي", sets: "3", reps: "12", note: "آمن للركبة" },
+            { name: "البلانك", sets: "3", reps: "30-40 ثانية", note: "استقامة الجسم" },
+            { name: "جسر الحوض", sets: "3", reps: "15", note: "تقوية الظهر" },
             { name: "تسلق الجبال", sets: "3", reps: "30 ثانية", note: "بوتيرة معتدلة" }
-        ]
-    },
-    2: {
-        title: "المرحلة الثانية - الشهر الثاني",
-        goal: "🎯 الهدف: زيادة الكثافة، حرق الدهون، وتحسين التحمل",
-        exercises: [
-            { name: "الضغط الأرضي", sets: "3", reps: "12-15", note: "حافظ على استقامة الجسم" },
-            { name: "الطعن الخلفي", sets: "3", reps: "10 لكل ساق", note: "حافظ على توازنك" },
-            { name: "رفع الأرجل", sets: "3", reps: "12", note: "لا ترفع بسرعة" },
-            { name: "البلانك الجانبي", sets: "3", reps: "30 ثانية لكل جانب", note: "حافظ على استقامة الجسم" }
-        ]
-    },
-    3: {
-        title: "المرحلة الثالثة - الشهر الثالث",
-        goal: "🎯 الهدف: نحت الجسم، رفع مستوى الحرق، وتثبيت العادات",
-        exercises: [
-            { name: "الضغط الضيق", sets: "3", reps: "12", note: "يركز على عضلات الذراع" },
-            { name: "الجلوس على الحائط", sets: "3", reps: "45 ثانية", note: "آمن للركبة" },
-            { name: "طحن البطن", sets: "3", reps: "15", note: "يركز على عضلات البطن" },
-            { name: "رفرفة الأرجل", sets: "3", reps: "30 ثانية", note: "حركة مستمرة" }
         ]
     }
 };
 
 // ==============================================
-// حالة التقدم
+// بيانات المتابعة المحفوظة
 // ==============================================
 let currentStage = parseInt(localStorage.getItem('currentStage')) || 1;
-let daysCompletedInStage = parseInt(localStorage.getItem('daysCompletedInStage')) || 0;
+let daysCompleted = JSON.parse(localStorage.getItem('daysCompleted')) || [];
 let workoutProgress = JSON.parse(localStorage.getItem('workoutProgress')) || {
     currentExercise: 0,
     currentRound: 1,
     completed: false
 };
-let completedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
 
 // ==============================================
-// وظائف مساعدة - التاريخ
+// وظائف مساعدة
 // ==============================================
 function getTodayName() {
-    const daysNames = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-    return daysNames[new Date().getDay()];
+    const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    return days[new Date().getDay()];
 }
 
 function getTodayType() {
@@ -101,109 +80,198 @@ function getTodayType() {
 }
 
 // ==============================================
-// تحديث عرض الخطة
+// التقويم
 // ==============================================
-function updatePlanView() {
+function renderCalendar() {
+    const today = getTodayName();
     const todayType = getTodayType();
-    const runMsg = document.getElementById('runDayMessage');
-    const restMsg = document.getElementById('restDayMessage');
-    const stageData = workoutStages[currentStage];
+    const todayContainer = document.getElementById('todayContainer');
+    const allDaysContainer = document.getElementById('allDaysContainer');
+    const showAllBtn = document.getElementById('showAllDaysBtn');
+    const completedCountEl = document.getElementById('completedCount');
 
-    // تحديث معلومات المرحلة
-    document.getElementById('currentStageBadge').textContent = currentStage;
-    document.getElementById('currentStageTitle').textContent = stageData.title;
-    document.getElementById('currentStageGoal').textContent = stageData.goal;
-    document.getElementById('monthProgress').textContent = `${daysCompletedInStage} / 30 يوم`;
-    document.getElementById('monthProgressFill').style.width = `${(daysCompletedInStage / 30) * 100}%`;
+    // عرض اليوم الحالي
+    const icons = { run: 'fa-running', exercise: 'fa-dumbbell', rest: 'fa-bed' };
+    const labels = { run: 'ركض', exercise: 'تمارين', rest: 'راحة' };
+    const isCompleted = daysCompleted.includes(today);
 
-    // إظهار الرسائل المناسبة
-    runMsg.style.display = todayType === 'run' ? 'block' : 'none';
-    restMsg.style.display = todayType === 'rest' ? 'block' : 'none';
+    todayContainer.innerHTML = `
+        <div class="today-card stage-card" style="border-color: var(--primary);">
+            <h3 class="today-title">اليوم: ${today}</h3>
+            <i class="fa ${icons[todayType]} today-icon"></i>
+            <p class="today-type">${labels[todayType]}</p>
+            ${todayType !== 'rest' ? 
+                `<button class="today-check ${isCompleted ? 'completed' : ''}" id="markTodayBtn">
+                    ${isCompleted ? '✓ مكتمل' : 'تحديد كمكتمل'}
+                </button>` : 
+                `<p class="rest-text">يوم راحة</p>`
+            }
+        </div>
+    `;
+
+    // حدث زر تحديد اليوم
+    const markTodayBtn = document.getElementById('markTodayBtn');
+    if (markTodayBtn) {
+        markTodayBtn.addEventListener('click', () => {
+            if (!daysCompleted.includes(today)) {
+                daysCompleted.push(today);
+                localStorage.setItem('daysCompleted', JSON.stringify(daysCompleted));
+                markTodayBtn.classList.add('completed');
+                markTodayBtn.textContent = '✓ مكتمل';
+                updateCompletedCount();
+            }
+        });
+    }
+
+    // عرض باقي الأيام
+    showAllBtn.onclick = () => allDaysContainer.classList.toggle('hidden');
+
+    // تحديث عداد الأيام
+    updateCompletedCount();
+
+    // إعادة تعيين الأسبوع
+    document.getElementById('resetWeek').onclick = () => {
+        if (confirm('هل تريد إعادة تعيين تقدم الأسبوع؟')) {
+            daysCompleted = [];
+            localStorage.removeItem('daysCompleted');
+            renderCalendar();
+        }
+    };
+}
+
+function updateCompletedCount() {
+    document.getElementById('completedCount').textContent = daysCompleted.length;
 }
 
 // ==============================================
-// تحديث عرض قسم الأدوات
+// قسم الأدوات والمؤقت
 // ==============================================
-function updateToolsView() {
+let timerInterval = null;
+let timerSeconds = 0;
+
+function initTools() {
     const todayType = getTodayType();
     const workoutSection = document.getElementById('workoutSequenceSection');
-    
+
+    // إظهار التمارين فقط في أيام التمرين
     if (todayType === 'exercise') {
         workoutSection.style.display = 'block';
-        updateCurrentExerciseDisplay();
+        updateExerciseDisplay();
     } else {
         workoutSection.style.display = 'none';
     }
 
-    // مؤقت عام
+    // إعداد المؤقت
     initTimer();
-    // ملاحظات
-    loadNotes();
-    // وزن
-    loadWeightData();
+
+    // زر إكمال التمرين
+    document.getElementById('completeExerciseBtn').onclick = () => {
+        const exercises = workoutStages[currentStage].exercises;
+        const total = exercises.length;
+
+        if (workoutProgress.completed) return;
+
+        if (workoutProgress.currentExercise < total - 1) {
+            workoutProgress.currentExercise++;
+        } else {
+            if (workoutProgress.currentRound < 3) {
+                workoutProgress.currentRound++;
+                workoutProgress.currentExercise = 0;
+            } else {
+                workoutProgress.completed = true;
+                alert('🎉 تم إكمال جميع التمارين!');
+                completeWorkoutDay();
+                return;
+            }
+        }
+        saveProgress();
+        updateExerciseDisplay();
+    };
 }
 
-// ==============================================
-// عرض التمرين الحالي
-// ==============================================
-function updateCurrentExerciseDisplay() {
-    const stageData = workoutStages[currentStage];
-    const exercises = stageData.exercises;
-    const totalExercises = exercises.length;
-    
-    document.getElementById('totalExercises').textContent = totalExercises;
+function updateExerciseDisplay() {
+    const exercises = workoutStages[currentStage].exercises;
+    const current = exercises[workoutProgress.currentExercise];
+    document.getElementById('totalExercises').textContent = exercises.length;
     document.getElementById('currentExerciseIndex').textContent = workoutProgress.currentExercise + 1;
     document.getElementById('currentRound').textContent = workoutProgress.currentRound;
-
-    const current = exercises[workoutProgress.currentExercise];
     document.getElementById('currentExerciseName').textContent = current.name;
     document.getElementById('currentExerciseDetails').textContent = `${current.sets} × ${current.reps}`;
     document.getElementById('currentExerciseNote').textContent = current.note;
 }
 
-// ==============================================
-// إكمال التمرين والانتقال
-// ==============================================
-document.getElementById('completeExerciseBtn').addEventListener('click', () => {
-    const stageData = workoutStages[currentStage];
-    const totalExercises = stageData.exercises.length;
-
-    if (workoutProgress.completed) return;
-
-    if (workoutProgress.currentExercise < totalExercises - 1) {
-        workoutProgress.currentExercise++;
-    } else {
-        if (workoutProgress.currentRound < 3) {
-            workoutProgress.currentRound++;
-            workoutProgress.currentExercise = 0;
-        } else {
-            workoutProgress.completed = true;
-            alert('🎉 تم إكمال جميع التمارين لهذا اليوم!');
-            completeDay();
-            return;
-        }
-    }
-
-    saveWorkoutProgress();
-    updateCurrentExerciseDisplay();
-});
-
-// ==============================================
-// حفظ حالة التمرين
-// ==============================================
-function saveWorkoutProgress() {
+function saveProgress() {
     localStorage.setItem('workoutProgress', JSON.stringify(workoutProgress));
 }
 
-// ==============================================
-// إكمال يوم تدريب
-// ==============================================
-function completeDay() {
+function completeWorkoutDay() {
     const today = getTodayName();
-    const todayKey = `${today}_${new Date().toDateString()}`;
-    
-    if (!completedDays.includes(todayKey)) {
-        completedDays.push(todayKey);
-        localStorage.setItem('completedDays', JSON.stringify(completedDays));
-        daysCompletedInStage++;
-        localStorage.setItem('daysCompleted
+    if (!daysCompleted.includes(today)) {
+        daysCompleted.push(today);
+        localStorage.setItem('daysCompleted', JSON.stringify(daysCompleted));
+    }
+}
+
+function initTimer() {
+    const display = document.getElementById('timerDisplay');
+    const startBtn = document.getElementById('startTimer');
+    const pauseBtn = document.getElementById('pauseTimer');
+    const resetBtn = document.getElementById('resetTimer');
+    const presets = document.querySelectorAll('.preset-btn');
+
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60).toString().padStart(2, '0');
+        const s = (sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    function updateDisplay() {
+        display.textContent = formatTime(timerSeconds);
+    }
+
+    presets.forEach(btn => {
+        btn.onclick = () => {
+            clearInterval(timerInterval);
+            timerSeconds = parseInt(btn.dataset.time);
+            updateDisplay();
+        };
+    });
+
+    startBtn.onclick = () => {
+        if (timerInterval) return;
+        timerInterval = setInterval(() => {
+            if (timerSeconds > 0) {
+                timerSeconds--;
+                updateDisplay();
+            } else {
+                clearInterval(timerInterval);
+                alert('انتهى الوقت!');
+            }
+        }, 1000);
+    };
+
+    pauseBtn.onclick = () => {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    };
+
+    resetBtn.onclick = () => {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerSeconds = 0;
+        updateDisplay();
+    };
+}
+
+// ==============================================
+// تشغيل أولي عند التحميل
+// ==============================================
+window.addEventListener('load', () => {
+    updatePlanView();
+});
+
+function updatePlanView() {
+    const todayType = getTodayType();
+    document.getElementById('runDayMessage').style.display = todayType === 'run' ? 'block' : 'none';
+    document.getElementById('restDayMessage').style.display = todayType === 'rest' ? 'block' : 'none';
+}
