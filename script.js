@@ -1,4 +1,6 @@
+// ==============================================
 // إدارة الوضع الداكن
+// ==============================================
 const themeToggle = document.getElementById('themeToggle');
 const htmlEl = document.documentElement;
 
@@ -12,7 +14,9 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
 });
 
+// ==============================================
 // تبديل التبويبات
+// ==============================================
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 
@@ -31,7 +35,9 @@ tabButtons.forEach(btn => {
     });
 });
 
-// 📊 بيانات الخطة والمراحل
+// ==============================================
+// بيانات الخطة والمراحل
+// ==============================================
 const workoutStages = {
     1: {
         title: "المرحلة الأولى - الشهر الأول",
@@ -66,7 +72,9 @@ const workoutStages = {
     }
 };
 
+// ==============================================
 // حالة التقدم
+// ==============================================
 let currentStage = parseInt(localStorage.getItem('currentStage')) || 1;
 let daysCompletedInStage = parseInt(localStorage.getItem('daysCompletedInStage')) || 0;
 let workoutProgress = JSON.parse(localStorage.getItem('workoutProgress')) || {
@@ -74,8 +82,26 @@ let workoutProgress = JSON.parse(localStorage.getItem('workoutProgress')) || {
     currentRound: 1,
     completed: false
 };
+let completedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
 
-// تحديث عرض الخطة بناءً على اليوم والمرحلة
+// ==============================================
+// وظائف مساعدة - التاريخ
+// ==============================================
+function getTodayName() {
+    const daysNames = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    return daysNames[new Date().getDay()];
+}
+
+function getTodayType() {
+    const today = getTodayName();
+    if (['السبت', 'الإثنين', 'الأربعاء'].includes(today)) return 'run';
+    if (['الأحد', 'الثلاثاء', 'الخميس'].includes(today)) return 'exercise';
+    return 'rest';
+}
+
+// ==============================================
+// تحديث عرض الخطة
+// ==============================================
 function updatePlanView() {
     const todayType = getTodayType();
     const workoutSection = document.getElementById('workoutSection');
@@ -105,7 +131,9 @@ function updatePlanView() {
     }
 }
 
-// تحديث عرض التمرين الحالي
+// ==============================================
+// عرض التمرين الحالي
+// ==============================================
 function updateCurrentExerciseDisplay() {
     const stageData = workoutStages[currentStage];
     const exercises = stageData.exercises;
@@ -121,7 +149,9 @@ function updateCurrentExerciseDisplay() {
     document.getElementById('currentExerciseNote').textContent = current.note;
 }
 
-// إكمال التمرين والانتقال للتالي
+// ==============================================
+// إكمال التمرين والانتقال
+// ==============================================
 document.getElementById('completeExerciseBtn').addEventListener('click', () => {
     const stageData = workoutStages[currentStage];
     const totalExercises = stageData.exercises.length;
@@ -146,24 +176,4 @@ document.getElementById('completeExerciseBtn').addEventListener('click', () => {
     updateCurrentExerciseDisplay();
 });
 
-// حفظ حالة التمرين
-function saveWorkoutProgress() {
-    localStorage.setItem('workoutProgress', JSON.stringify(workoutProgress));
-}
-
-// إكمال يوم تدريب
-function completeDay() {
-    daysCompletedInStage++;
-    localStorage.setItem('daysCompletedInStage', daysCompletedInStage);
-    
-    // التحقق من إكمال الشهر
-    if (daysCompletedInStage >= 30 && currentStage < 3) {
-        currentStage++;
-        daysCompletedInStage = 0;
-        localStorage.setItem('currentStage', currentStage);
-        localStorage.setItem('daysCompletedInStage', daysCompletedInStage);
-        alert(`✅ تهانينا! انتقلت إلى المرحلة ${currentStage} الجديدة!`);
-    }
-
-    // إعادة تعيين تقدم التمارين لليوم القادم
-    workoutProgress = { currentExercise: 0, currentRound: 1, completed: false };
+// =
