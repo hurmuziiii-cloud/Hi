@@ -189,10 +189,17 @@
 
             <!-- تبويب التقويم -->
             <section id="calendar" class="tab-content">
-                <h2 class="section-title">📅 جدول المتابعة الأسبوعي</h2>
-                <p class="section-desc">اضغط على المربع لتسجيل إكمال التمرين يدوياً</p>
+                <h2 class="section-title">📅 جدول المتابعة</h2>
+                <p class="section-desc">يظهر اليوم الحالي تلقائياً</p>
 
-                <div class="calendar-grid">
+                <!-- عرض اليوم الحالي فقط -->
+                <div class="today-container" id="todayContainer"></div>
+
+                <!-- زر لعرض باقي الأيام -->
+                <button id="showAllDaysBtn" class="btn btn-secondary w-full mt-4">عرض باقي أيام الأسبوع</button>
+
+                <!-- باقي الأيام (مخفي افتراضياً) -->
+                <div id="allDaysContainer" class="calendar-grid hidden mt-4">
                     <!-- رؤوس الأيام -->
                     <div class="day-header">السبت</div>
                     <div class="day-header">الأحد</div>
@@ -258,8 +265,8 @@
                     </div>
                 </div>
 
-                <div class="stats-box">
-                    <h3>📊 ملخص الأسبوع</h3>
+                <div class="stats-box mt-4">
+                    <h3>📊 ملخص التقدم</h3>
                     <p>عدد الأيام المكتملة: <strong id="completedCount">0</strong> من 6 أيام تدريب</p>
                     <button id="resetWeek" class="btn btn-secondary">إعادة تعيين الأسبوع</button>
                 </div>

@@ -25,44 +25,110 @@ tabButtons.forEach(btn => {
         
         btn.classList.add('active');
         document.getElementById(target).classList.add('active');
+
+        // تحديث عرض اليوم عند فتح تبويب التقويم
+        if (target === 'calendar') {
+            showTodayOnly();
+        }
     });
 });
 
-// إدارة التقويم والتحديد اليدوي
+// 📅 وظائف عرض اليوم الحالي
+const todayContainer = document.getElementById('todayContainer');
+const allDaysContainer = document.getElementById('allDaysContainer');
+const showAllDaysBtn = document.getElementById('showAllDaysBtn');
+
+// ترجمة رقم اليوم إلى اسم بالعربية
+function getTodayName() {
+    const daysNames = [
+        'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'
+    ];
+    const todayNum = new Date().getDay();
+    return daysNames[todayNum];
+}
+
+// عرض اليوم الحالي فقط
+function showTodayOnly() {
+    const todayName = getTodayName();
+    const todayCard = document.querySelector(`.day-card[data-day="${todayName}"]`);
+    
+    if (!todayCard) return;
+
+    // نسخ محتوى اليوم الحالي وعرضه بشكل كبير
+    todayContainer.innerHTML = `
+        <div class="today-card ${todayCard.classList.contains('day-run') ? 'day-run' : todayCard.classList.contains('day-exercise') ? 'day-exercise' : 'day-rest'}">
+            <h3 class="today-title">اليوم: ${todayName}</h3>
+            <i class="fa ${todayCard.querySelector('i').className} today-icon"></i>
+            <span class="today-type">${todayCard.querySelector('.day-type').textContent}</span>
+            ${todayCard.classList.contains('day-rest') 
+                ? '<p class="rest-text">يوم راحة واستشفاء</p>' 
+                : `<button class="check-btn today-check" data-day="${todayName}">
+                    <i class="fa fa-check"></i> ${completedDays.includes(todayName) ? 'مكتمل' : 'تسجيل الإنجاز'}
+                   </button>`
+            }
+        </div>
+    `;
+
+    // ربط زر التحديد بالحفظ
+    const todayCheckBtn = todayContainer.querySelector('.today-check');
+    if (todayCheckBtn) {
+        todayCheckBtn.addEventListener('click', () => toggleDayCompletion(todayName, todayCheckBtn));
+    }
+}
+
+// تبديل حالة إكمال اليوم
+function toggleDayCompletion(dayName, buttonElement) {
+    if (completedDays.includes(dayName)) {
+        completedDays = completedDays.filter(d => d !== dayName);
+        buttonElement.innerHTML = '<i class="fa fa-check"></i> تسجيل الإنجاز';
+        buttonElement.classList.remove('completed');
+    } else {
+        completedDays.push(dayName);
+        buttonElement.innerHTML = '<i class="fa fa-check"></i> مكتمل ✅';
+        buttonElement.classList.add('completed');
+    }
+    
+    localStorage.setItem('completedDays', JSON.stringify(completedDays));
+    updateCalendarDisplay();
+    updateStats();
+}
+
+// زر عرض باقي الأيام
+showAllDaysBtn.addEventListener('click', () => {
+    const isHidden = allDaysContainer.classList.contains('hidden');
+    allDaysContainer.classList.toggle('hidden');
+    showAllDaysBtn.textContent = isHidden ? 'إخفاء باقي الأيام' : 'عرض باقي أيام الأسبوع';
+});
+
+// إدارة التقويم الكامل
 const dayCards = document.querySelectorAll('.day-card:not(.day-rest)');
 const completedCountEl = document.getElementById('completedCount');
 const resetWeekBtn = document.getElementById('resetWeek');
 
 // تحميل الحالة المحفوظة
 let completedDays = JSON.parse(localStorage.getItem('completedDays')) || [];
-updateCalendarDisplay();
 
 dayCards.forEach(card => {
     const checkBtn = card.querySelector('.check-btn');
-    
     checkBtn.addEventListener('click', () => {
         const day = card.dataset.day;
-        
-        if (completedDays.includes(day)) {
-            completedDays = completedDays.filter(d => d !== day);
-            card.classList.remove('completed');
-        } else {
-            completedDays.push(day);
-            card.classList.add('completed');
-        }
-        
-        localStorage.setItem('completedDays', JSON.stringify(completedDays));
-        updateStats();
+        toggleDayCompletion(day, checkBtn);
     });
 });
 
 function updateCalendarDisplay() {
     dayCards.forEach(card => {
-        if (completedDays.includes(card.dataset.day)) {
+        const day = card.dataset.day;
+        const checkBtn = card.querySelector('.check-btn');
+        if (completedDays.includes(day)) {
             card.classList.add('completed');
+            checkBtn.classList.add('completed');
+        } else {
+            card.classList.remove('completed');
+            checkBtn.classList.remove('completed');
         }
     });
-    updateStats();
+    showTodayOnly(); // تحديث عرض اليوم الحالي أيضاً
 }
 
 function updateStats() {
@@ -73,10 +139,15 @@ resetWeekBtn.addEventListener('click', () => {
     if (confirm('هل أنت متأكد من إعادة تعيين جميع أيام الأسبوع؟')) {
         completedDays = [];
         localStorage.removeItem('completedDays');
-        dayCards.forEach(card => card.classList.remove('completed'));
+        updateCalendarDisplay();
         updateStats();
     }
 });
+
+// تهيئة العرض عند التحميل
+showTodayOnly();
+updateCalendarDisplay();
+updateStats();
 
 // إدارة المؤقت
 let timerInterval;
