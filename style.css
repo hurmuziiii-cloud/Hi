@@ -170,3 +170,10 @@ textarea {width:100%; padding:0.8rem; border:1px solid var(--border); border-rad
 .weight-input-group {display:flex; gap:0.7rem; margin-bottom:1rem;}
 .weight-input-group input {flex:1; padding:0.8rem; border:1px solid var(--border); border-radius:8px; background:transparent; color:var(--text);}
 .chart-container {height:250px; margin-top:1rem;}
+/* دعم التعديل اليدوي للمؤقت */
+.timer-display[contenteditable="true"] {
+    outline: 2px solid var(--primary);
+    border-radius: 8px;
+    padding: 0.5rem;
+    background: rgba(37, 99, 235, 0.05);
+}
