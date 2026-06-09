@@ -52,138 +52,173 @@
                     </div>
                 </div>
 
-                <!-- المرحلة 1 -->
-                <div class="stage-card stage-1">
+                <!-- عرض المرحلة الحالية -->
+                <div class="stage-card current-stage">
                     <div class="stage-header">
-                        <span class="stage-badge">1</span>
-                        <h2>المرحلة الأولى - الشهر الأول</h2>
+                        <span class="stage-badge" id="currentStageBadge">1</span>
+                        <h2 id="currentStageTitle">المرحلة الأولى - الشهر الأول</h2>
                     </div>
-                    <p class="stage-goal">🎯 الهدف: تهيئة الجسم، رفع اللياقة، وتقوية العضلات الأساسية</p>
-                    
-                    <div class="routine-block">
-                        <h3 class="routine-title">🏃‍♂️ أيام الركض: السبت - الإثنين - الأربعاء</h3>
-                        <p>5 دقائق مشي إحماء → 15 دقيقة هرولة خفيفة → 5 دقائق تهدئة</p>
-                    </div>
-
-                    <div class="routine-block">
-                        <h3 class="routine-title">💪 أيام التمارين: الأحد - الثلاثاء - الخميس</h3>
-                        <div class="table-responsive">
-                            <table class="exercise-table">
-                                <thead>
-                                    <tr>
-                                        <th>التمرين</th>
-                                        <th>المجموعات × التكرار</th>
-                                        <th>ملاحظات</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>الضغط المائل</td>
-                                        <td>3 × 12</td>
-                                        <td>يداك على حافة سرير</td>
-                                    </tr>
-                                    <tr>
-                                        <td>سكوات على كرسي</td>
-                                        <td>3 × 12</td>
-                                        <td>آمن تماماً للركبة</td>
-                                    </tr>
-                                    <tr>
-                                        <td>البلانك</td>
-                                        <td>3 × 30-40 ثانية</td>
-                                        <td>حافظ على استقامة الجسم</td>
-                                    </tr>
-                                    <tr>
-                                        <td>جسر الحوض</td>
-                                        <td>3 × 15</td>
-                                        <td>يقوي أسفل الظهر والأرداف</td>
-                                    </tr>
-                                    <tr>
-                                        <td>تسلق الجبال</td>
-                                        <td>3 × 30 ثانية</td>
-                                        <td>بوتيرة معتدلة</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <p class="stage-goal" id="currentStageGoal">🎯 الهدف: تهيئة الجسم، رفع اللياقة، وتقوية العضلات الأساسية</p>
+                    <div class="progress-month">
+                        <span>تقدم الشهر: <strong id="monthProgress">0 / 30 يوم</strong></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="monthProgressFill"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- المرحلة 2 -->
-                <div class="stage-card stage-2">
-                    <div class="stage-header">
-                        <span class="stage-badge">2</span>
-                        <h2>المرحلة الثانية - الشهر الثاني</h2>
+                <!-- 🔹 قسم التمرين النشط (يظهر فقط في أيام التمارين) -->
+                <div class="workout-section" id="workoutSection" style="display: none;">
+                    <h3 class="section-title">💪 تسلسل التمارين</h3>
+                    <div class="timer-display" id="workoutTimer">00:00</div>
+                    <div class="timer-presets">
+                        <button class="preset-btn" data-time="30">30 ثانية</button>
+                        <button class="preset-btn" data-time="45">45 ثانية</button>
+                        <button class="preset-btn" data-time="60">دقيقة</button>
+                        <button class="preset-btn" data-time="120">دقيقتان</button>
                     </div>
-                    <p class="stage-goal">🎯 الهدف: زيادة الكثافة، حرق الدهون، وتحسين التحمل</p>
-                    
-                    <div class="routine-block">
-                        <h3 class="routine-title">🏃‍♂️ ركض متقطع: 3 أيام أسبوعياً</h3>
-                        <p>5 دقائق إحماء → (1 دقيقة ركض سريع + 2 دقيقة مشي) × 5 → 5 دقائق تهدئة</p>
+                    <div class="timer-controls">
+                        <button id="startWorkoutTimer" class="btn btn-success">بدء</button>
+                        <button id="pauseWorkoutTimer" class="btn btn-warning">إيقاف</button>
+                        <button id="resetWorkoutTimer" class="btn btn-danger">إعادة</button>
                     </div>
 
-                    <div class="routine-block">
-                        <h3 class="routine-title">💪 تمارين القوة</h3>
-                        <div class="exercise-cards">
-                            <div class="exercise-item">
-                                <h4>الضغط الأرضي</h4>
-                                <p>3 × 12-15 تكرار</p>
-                            </div>
-                            <div class="exercise-item">
-                                <h4>الطعن الخلفي</h4>
-                                <p>3 × 10 لكل ساق</p>
-                            </div>
-                            <div class="exercise-item">
-                                <h4>رفع الأرجل</h4>
-                                <p>3 × 12 تكرار</p>
-                            </div>
-                            <div class="exercise-item">
-                                <h4>البلانك الجانبي</h4>
-                                <p>3 × 30 ثانية لكل جانب</p>
-                            </div>
-                        </div>
+                    <!-- عرض التمرين الحالي -->
+                    <div class="current-exercise-card">
+                        <h4 class="exercise-name" id="currentExerciseName">اسم التمرين</h4>
+                        <p class="exercise-sets-reps" id="currentExerciseDetails">3 × 12</p>
+                        <p class="exercise-note" id="currentExerciseNote">ملاحظة</p>
+                        <p class="sequence-info">الدورة: <span id="currentRound">1</span> / 3 | التمرين: <span id="currentExerciseIndex">1</span> / <span id="totalExercises">5</span></p>
+                        <button class="btn btn-primary w-full mt-3" id="completeExerciseBtn">✓ إكمال التمرين والانتقال للتالي</button>
                     </div>
                 </div>
 
-                <!-- المرحلة 3 -->
-                <div class="stage-card stage-3">
-                    <div class="stage-header">
-                        <span class="stage-badge">3</span>
-                        <h2>المرحلة الثالثة - الشهر الثالث</h2>
-                    </div>
-                    <p class="stage-goal">🎯 الهدف: نحت الجسم، رفع مستوى الحرق، وتثبيت العادات</p>
-                    
-                    <div class="routine-block">
-                        <h3 class="routine-title">🏃‍♂️ ركض مكثف</h3>
-                        <p>زيادة مدة الفترات وعدد الدورات، أو استبدالها بتمارين هوائية عالية الكثافة</p>
-                    </div>
+                <!-- 🔹 رسالة أيام الركض -->
+                <div class="run-day-message" id="runDayMessage" style="display: none;">
+                    <h3 class="section-title">🏃‍♂️ يوم ركض</h3>
+                    <p>الخطة لهذا اليوم: 5 دقائق إحماء → 15 دقيقة هرولة خفيفة → 5 دقائق تهدئة</p>
+                </div>
 
-                    <div class="routine-block">
-                        <h3 class="routine-title">💪 نظام الدائرة</h3>
-                        <p>أداء التمارين متتالية دون راحة، ثم راحة دقيقتين بعد انتهاء المجموعة</p>
-                        <div class="exercise-cards">
-                            <div class="exercise-item">
-                                <h4>الضغط الضيق</h4>
-                                <p>12 تكرار</p>
-                            </div>
-                            <div class="exercise-item">
-                                <h4>الجلوس على الحائط</h4>
-                                <p>45 ثانية</p>
-                            </div>
-                            <div class="exercise-item">
-                                <h4>طحن البطن</h4>
-                                <p>15 تكرار</p>
-                            </div>
-                            <div class="exercise-item">
-                                <h4>رفرفة الأرجل</h4>
-                                <p>30 ثانية</p>
+                <!-- 🔹 رسالة أيام الراحة -->
+                <div class="rest-day-message" id="restDayMessage" style="display: none;">
+                    <h3 class="section-title">😴 يوم راحة</h3>
+                    <p>يوم مخصص للاستشفاء واستعادة طاقة الجسم</p>
+                </div>
+
+                <!-- 🔹 قائمة التمارين الكاملة (للاطلاع) -->
+                <div class="full-plan-preview">
+                    <h3>📋 نظرة عامة على الخطة الكاملة</h3>
+                    
+                    <div class="stage-card stage-1">
+                        <div class="stage-header">
+                            <span class="stage-badge">1</span>
+                            <h2>المرحلة الأولى - الشهر الأول</h2>
+                        </div>
+                        <p class="stage-goal">🎯 الهدف: تهيئة الجسم، رفع اللياقة، وتقوية العضلات الأساسية</p>
+                        
+                        <div class="routine-block">
+                            <h3 class="routine-title">🏃‍♂️ أيام الركض: السبت - الإثنين - الأربعاء</h3>
+                            <p>5 دقائق مشي إحماء → 15 دقيقة هرولة خفيفة → 5 دقائق تهدئة</p>
+                        </div>
+
+                        <div class="routine-block">
+                            <h3 class="routine-title">💪 أيام التمارين: الأحد - الثلاثاء - الخميس</h3>
+                            <div class="table-responsive">
+                                <table class="exercise-table">
+                                    <thead>
+                                        <tr>
+                                            <th>التمرين</th>
+                                            <th>المجموعات × التكرار</th>
+                                            <th>ملاحظات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="stage1Exercises">
+                                        <tr><td>الضغط المائل</td><td>3 × 12</td><td>يداك على حافة سرير</td></tr>
+                                        <tr><td>سكوات على كرسي</td><td>3 × 12</td><td>آمن تماماً للركبة</td></tr>
+                                        <tr><td>البلانك</td><td>3 × 30-40 ثانية</td><td>حافظ على استقامة الجسم</td></tr>
+                                        <tr><td>جسر الحوض</td><td>3 × 15</td><td>يقوي أسفل الظهر والأرداف</td></tr>
+                                        <tr><td>تسلق الجبال</td><td>3 × 30 ثانية</td><td>بوتيرة معتدلة</td></tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nutrition-card">
-                    <h3>🥗 التغذية السليمة</h3>
-                    <p>التمارين تحتاج إلى دعم غذائي: ركز على البروتين، الخضروات، وشرب الماء بكثرة، وقلل السكريات والدهون المشبعة</p>
+                    <div class="stage-card stage-2">
+                        <div class="stage-header">
+                            <span class="stage-badge">2</span>
+                            <h2>المرحلة الثانية - الشهر الثاني</h2>
+                        </div>
+                        <p class="stage-goal">🎯 الهدف: زيادة الكثافة، حرق الدهون، وتحسين التحمل</p>
+                        
+                        <div class="routine-block">
+                            <h3 class="routine-title">🏃‍♂️ ركض متقطع: 3 أيام أسبوعياً</h3>
+                            <p>5 دقائق إحماء → (1 دقيقة ركض سريع + 2 دقيقة مشي) × 5 → 5 دقائق تهدئة</p>
+                        </div>
+
+                        <div class="routine-block">
+                            <h3 class="routine-title">💪 تمارين القوة</h3>
+                            <div class="exercise-cards">
+                                <div class="exercise-item">
+                                    <h4>الضغط الأرضي</h4>
+                                    <p>3 × 12-15 تكرار</p>
+                                </div>
+                                <div class="exercise-item">
+                                    <h4>الطعن الخلفي</h4>
+                                    <p>3 × 10 لكل ساق</p>
+                                </div>
+                                <div class="exercise-item">
+                                    <h4>رفع الأرجل</h4>
+                                    <p>3 × 12 تكرار</p>
+                                </div>
+                                <div class="exercise-item">
+                                    <h4>البلانك الجانبي</h4>
+                                    <p>3 × 30 ثانية لكل جانب</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stage-card stage-3">
+                        <div class="stage-header">
+                            <span class="stage-badge">3</span>
+                            <h2>المرحلة الثالثة - الشهر الثالث</h2>
+                        </div>
+                        <p class="stage-goal">🎯 الهدف: نحت الجسم، رفع مستوى الحرق، وتثبيت العادات</p>
+                        
+                        <div class="routine-block">
+                            <h3 class="routine-title">🏃‍♂️ ركض مكثف</h3>
+                            <p>زيادة مدة الفترات وعدد الدورات، أو استبدالها بتمارين هوائية عالية الكثافة</p>
+                        </div>
+
+                        <div class="routine-block">
+                            <h3 class="routine-title">💪 نظام الدائرة</h3>
+                            <p>أداء التمارين متتالية دون راحة، ثم راحة دقيقتين بعد انتهاء المجموعة</p>
+                            <div class="exercise-cards">
+                                <div class="exercise-item">
+                                    <h4>الضغط الضيق</h4>
+                                    <p>12 تكرار</p>
+                                </div>
+                                <div class="exercise-item">
+                                    <h4>الجلوس على الحائط</h4>
+                                    <p>45 ثانية</p>
+                                </div>
+                                <div class="exercise-item">
+                                    <h4>طحن البطن</h4>
+                                    <p>15 تكرار</p>
+                                </div>
+                                <div class="exercise-item">
+                                    <h4>رفرفة الأرجل</h4>
+                                    <p>30 ثانية</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nutrition-card">
+                        <h3>🥗 التغذية السليمة</h3>
+                        <p>التمارين تحتاج إلى دعم غذائي: ركز على البروتين، الخضروات، وشرب الماء بكثرة، وقلل السكريات والدهون المشبعة</p>
+                    </div>
                 </div>
             </section>
 
@@ -192,15 +227,11 @@
                 <h2 class="section-title">📅 جدول المتابعة</h2>
                 <p class="section-desc">يظهر اليوم الحالي تلقائياً</p>
 
-                <!-- عرض اليوم الحالي فقط -->
                 <div class="today-container" id="todayContainer"></div>
 
-                <!-- زر لعرض باقي الأيام -->
                 <button id="showAllDaysBtn" class="btn btn-secondary w-full mt-4">عرض باقي أيام الأسبوع</button>
 
-                <!-- باقي الأيام (مخفي افتراضياً) -->
                 <div id="allDaysContainer" class="calendar-grid hidden mt-4">
-                    <!-- رؤوس الأيام -->
                     <div class="day-header">السبت</div>
                     <div class="day-header">الأحد</div>
                     <div class="day-header">الإثنين</div>
@@ -209,7 +240,6 @@
                     <div class="day-header">الخميس</div>
                     <div class="day-header">الجمعة</div>
 
-                    <!-- أيام الأسبوع -->
                     <div class="day-card day-run" data-day="السبت">
                         <i class="fa fa-running"></i>
                         <span class="day-type">ركض</span>
@@ -277,7 +307,7 @@
                 <h2 class="section-title">🛠️ أدوات مساعدة</h2>
 
                 <div class="tool-card">
-                    <h3>⏱️ مؤقت تدريب</h3>
+                    <h3>⏱️ مؤقت عام</h3>
                     <div class="timer-display" id="timerDisplay">00:00</div>
                     <div class="timer-presets">
                         <button class="preset-btn" data-time="30">30 ثانية</button>
